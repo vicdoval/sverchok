@@ -48,30 +48,22 @@ from sverchok.utils.sv_viewer_utils import (
 )
 
 
+# def svRegister(function='register', classnames):
+#     if function == 'register':
+#         f = bpy.utils.register_class
+#     else:
+#         f = bpy.utils.unregister_class
+    
+#     for i in classnames:
+#         f(i)
 
-# could be imported from bmeshviewr directly, it's almost identical
-class SvSVGBetaViewOp(bpy.types.Operator):
-
-    bl_idname = "node.sv_callback_svgbeta_viewer"
-    bl_label = "Sverchok SVG Ops"
-    bl_options = {'REGISTER', 'UNDO'}
-
-    fn_name = StringProperty(default='')
-
-    def dispatch(self, context, type_op):
-        n = context.node
-
-
-    def execute(self, context):
-        self.dispatch(context, self.fn_name)
-        return {'FINISHED'}
 
 
 # should inherit from bmeshviewer, many of these methods are largely identical.
-class SvSVGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
+class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
 
-    bl_idname = 'SvSVGBetaViewerNode'
-    bl_label = 'SvSVG Viewer Beta'
+    bl_idname = 'SvGBetaViewerNode'
+    bl_label = 'SvG viewer Beta'
     bl_icon = 'OUTLINER_OB_EMPTY'
 
     activate = BoolProperty(
@@ -80,9 +72,7 @@ class SvSVGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
         default=True,
         update=updateNode)
 
-    output_filename = StringProperty(
-        default='', update=updateNode
-    )
+    output_filename = StringProperty(default='dd', update=updateNode)
 
     def sv_init(self, context):
         self.use_custom_color = True
@@ -119,19 +109,14 @@ class SvSVGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
         # m is used to denote the possibility of multiple lists per socket.
         mverts, mfaces, mline_width, mstroke, mfill = self.get_geometry_from_sockets()
 
-
-        for obj_index, Verts in enumerate(mverts):
-            if not Verts:
-                continue
-
-
+        # for group, Verts in enumerate(mverts):
+        #     if not Verts:
+        #        continue
 
 
 def register():
-    bpy.utils.register_class(SvPolylineViewerNode)
-    bpy.utils.register_class(SvPolylineViewOp)
+    bpy.utils.register_class(SvGBetaViewerNode)
 
 
 def unregister():
-    bpy.utils.unregister_class(SvPolylineViewerNode)
-    bpy.utils.unregister_class(SvPolylineViewOp)
+    bpy.utils.unregister_class(SvGBetaViewerNode)

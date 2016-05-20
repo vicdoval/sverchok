@@ -30,6 +30,7 @@ nodes_dict = {
         'viewer_curves',
         'viewer_curves_2d',
         'viewer_polyline',
+        'viewer_svg_beta',
         'viewer_skin',
         'viewer_text',
         'viewer_mk2',
