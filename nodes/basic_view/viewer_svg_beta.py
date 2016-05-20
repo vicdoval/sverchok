@@ -19,32 +19,34 @@
 import itertools
 
 import bpy
-from bpy.props import (
-    BoolProperty,
-    StringProperty,
-    FloatProperty,
-    IntProperty)
-
 from mathutils import Matrix, Vector
+
+from bpy.props import (
+    BoolProperty, StringProperty, FloatProperty, IntProperty)
 
 from sverchok.utils.sv_bmesh_utils import bmesh_from_pydata
 
 from sverchok.node_tree import (
-    SverchCustomTreeNode,
-    VerticesSocket,
-    MatrixSocket,
-    StringsSocket)
+    SverchCustomTreeNode, VerticesSocket, MatrixSocket, StringsSocket)
 
 from sverchok.data_structure import (
-    dataCorrect,
-    fullList,
-    updateNode,
-    SvGetSocketAnyType)
+    dataCorrect, fullList, updateNode, SvGetSocketAnyType)
 
 from sverchok.utils.sv_viewer_utils import (
-    matrix_sanitizer,
-    natural_plus_one,
-    get_random_init)
+    matrix_sanitizer, natural_plus_one, get_random_init)
+
+
+def SVG_SETUP(width, height):
+    svg = """\
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="%s" height="%s">""" % (width, height)
+    return svg
+
+SVG_END = """\
+</svg>
+"""
+
+
 
 # should inherit from bmeshviewer, many of these methods are largely identical.
 class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
@@ -79,7 +81,6 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
 
         row.prop(self, 'output_filename')
 
-
     def get_geometry_from_sockets(self):
 
         def get(socket):
@@ -98,13 +99,13 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
 
         return text
 
-
     def process(self):
         if not (self.inputs['vertices'].is_linked):
             return
 
         # m is used to denote the possibility of multiple lists per socket.
-        mverts, medges, mfaces, mline_width, mstroke, mfill = self.get_geometry_from_sockets()
+        geom = self.get_geometry_from_sockets()
+        mverts, medges, mfaces, mline_width, mstroke, mfill = geom
 
         '''
         maxlen = max(len(mverts), *(map(len, mrest)))
@@ -120,7 +121,14 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
         texts = bpy.data.texts
         if mverts:
             text = self.get_text()
-            text.from_string(str(mverts))
+            
+            svg_strings = []
+            svg_strings.append(SVG_SETUP(300, 400))
+            for line in mverts:
+                svg_strings.append(str(line))
+            svg_strings.append(SVG_END)
+            
+            text.from_string('\n'.join(svg_strings))
 
 
 def register():
