@@ -95,11 +95,11 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
 
     def get_geometry_from_sockets(self):
 
-        def get(socket_name):
-            data = self.inputs[socket_name].sv_get(default=[])
+        def get(socket):
+            data = socket.sv_get(default=[])
             return dataCorrect(data)
 
-        return [get(i.name) for i in self.inputs]
+        return [get(i) for i in self.inputs]
 
 
     def process(self):
