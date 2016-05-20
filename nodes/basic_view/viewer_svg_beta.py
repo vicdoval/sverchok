@@ -44,20 +44,7 @@ from sverchok.data_structure import (
 from sverchok.utils.sv_viewer_utils import (
     matrix_sanitizer,
     natural_plus_one,
-    get_random_init
-)
-
-
-# def svRegister(function='register', classnames):
-#     if function == 'register':
-#         f = bpy.utils.register_class
-#     else:
-#         f = bpy.utils.unregister_class
-    
-#     for i in classnames:
-#         f(i)
-
-
+    get_random_init)
 
 # should inherit from bmeshviewer, many of these methods are largely identical.
 class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
@@ -101,13 +88,23 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
 
         return [get(i) for i in self.inputs]
 
+    def get_text(self):
+        texts = bpy.data.texts
+
+        if self.output_filename in texts:
+            text = texts[self.output_filename]
+        else:
+            text = texts.new(self.output_filename)
+
+        return text
+
 
     def process(self):
         if not (self.inputs['vertices'].is_linked):
             return
 
         # m is used to denote the possibility of multiple lists per socket.
-        mverts, mfaces, mline_width, mstroke, mfill = self.get_geometry_from_sockets()
+        mverts, medges, mfaces, mline_width, mstroke, mfill = self.get_geometry_from_sockets()
 
         '''
         maxlen = max(len(mverts), *(map(len, mrest)))
@@ -120,6 +117,10 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
         # for group, Verts in enumerate(mverts):
         #     if not Verts:
         #        continue
+        texts = bpy.data.texts
+        if mverts:
+            text = self.get_text()
+            text.from_string(str(mverts))
 
 
 def register():
