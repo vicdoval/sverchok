@@ -109,6 +109,14 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
         # m is used to denote the possibility of multiple lists per socket.
         mverts, mfaces, mline_width, mstroke, mfill = self.get_geometry_from_sockets()
 
+        '''
+        maxlen = max(len(mverts), *(map(len, mrest)))
+        fullList(mverts, maxlen)
+        for idx in range(3):
+            if mrest[idx]:
+                fullList(mrest[idx], maxlen)
+        '''
+
         # for group, Verts in enumerate(mverts):
         #     if not Verts:
         #        continue
