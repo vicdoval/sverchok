@@ -19,21 +19,19 @@
 import itertools
 
 import bpy
-from mathutils import Matrix, Vector
 
 from bpy.props import (
     BoolProperty, StringProperty, FloatProperty, IntProperty)
 
 from sverchok.utils.sv_bmesh_utils import bmesh_from_pydata
+from sverchok.utils.sv_viewer_utils import get_text
 
 from sverchok.node_tree import (
-    SverchCustomTreeNode, VerticesSocket, MatrixSocket, StringsSocket)
+    SverchCustomTreeNode, VerticesSocket, StringsSocket)
 
 from sverchok.data_structure import (
-    dataCorrect, fullList, updateNode, SvGetSocketAnyType)
+    dataCorrect, fullList, updateNode)
 
-from sverchok.utils.sv_viewer_utils import (
-    matrix_sanitizer, natural_plus_one, get_random_init)
 
 
 def SVG_SETUP(width, height):
@@ -89,16 +87,6 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
 
         return [get(i) for i in self.inputs]
 
-    def get_text(self):
-        texts = bpy.data.texts
-
-        if self.output_filename in texts:
-            text = texts[self.output_filename]
-        else:
-            text = texts.new(self.output_filename)
-
-        return text
-
     def process(self):
         if not (self.inputs['vertices'].is_linked):
             return
@@ -120,7 +108,7 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
         #        continue
         texts = bpy.data.texts
         if mverts:
-            text = self.get_text()
+            text = get_text(self.output_filename)
             
             svg_strings = []
             svg_strings.append(SVG_SETUP(300, 400))

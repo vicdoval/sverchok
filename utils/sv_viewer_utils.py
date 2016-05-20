@@ -63,3 +63,13 @@ def get_random_init():
     similar_names = [name for name in set_of_names_pre_underscores if n in name]
     plus_one = natural_plus_one(similar_names)
     return n + str(plus_one)
+
+
+def get_text(fn):
+    texts = bpy.data.texts
+    if fn in texts:
+        text = texts[fn]
+    else:
+        text = texts.new(fn)
+    return text
+
