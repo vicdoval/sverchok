@@ -24,7 +24,8 @@ from bpy.props import (
     BoolProperty, StringProperty, FloatProperty, IntProperty)
 
 from sverchok.utils.sv_bmesh_utils import bmesh_from_pydata
-from sverchok.utils.sv_viewer_utils import get_text
+from sverchok.utils.sv_viewer_utils import (
+    get_text, get_geometry_from_sockets)
 
 from sverchok.node_tree import (
     SverchCustomTreeNode, VerticesSocket, StringsSocket)
@@ -44,6 +45,12 @@ def SVG_SETUP(width, height):
 SVG_END = """\
 </svg>
 """
+
+def SVG_GROUP(_class, _id, full_str):
+    return """\
+    <group class="%s" id="%s">
+        <path="M%s"/>
+    </group>\n""" % (_class, _id, full_str)
 
 
 class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
@@ -76,21 +83,13 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
         row = col.row(align=True)
         row.prop(self, 'output_filename')
 
-    def get_geometry_from_sockets(self):
-
-        def get(socket):
-            data = socket.sv_get(default=[])
-            return dataCorrect(data)
-
-        return [get(i) for i in self.inputs]
-
     def process(self):
 
         if (not self.inputs['vertices'].is_linked) or (not self.activate):
             return
 
         # m is used to denote the possibility of multiple lists per socket.
-        geom = self.get_geometry_from_sockets()
+        geom = get_geometry_from_sockets(self)
         mverts, medges, mfaces, mline_width, mstroke, mfill = geom
 
         '''
@@ -101,17 +100,22 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
                 fullList(mrest[idx], maxlen)
         '''
 
-        # for group, Verts in enumerate(mverts):
-        #     if not Verts:
-        #        continue
+        def reduce_dimensions(verts):
+            return ' '.join([str(v[0]) + " " + str(v[1]) for v in verts]) + 'L'
+
+
         texts = bpy.data.texts
         if mverts:
             text = get_text(self.output_filename)
             
             svg_strings = []
             svg_strings.append(SVG_SETUP(300, 400))
-            for line in mverts:
-                svg_strings.append(str(line))
+            
+            for verts in mverts:
+                verts2d = reduce_dimensions(verts)
+                dline = SVG_GROUP('grr', 'ffzzk', verts2d)
+                svg_strings.append(dline)
+            
             svg_strings.append(SVG_END)
             
             text.from_string('\n'.join(svg_strings))

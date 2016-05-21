@@ -5,6 +5,7 @@ import bpy
 import mathutils
 from mathutils import Vector, Matrix
 
+from sverchok.data_structure import dataCorrect
 
 def matrix_sanitizer(matrix):
     #  reduces all values below threshold (+ or -) to 0.0, to avoid meaningless
@@ -73,3 +74,7 @@ def get_text(fn):
         text = texts.new(fn)
     return text
 
+
+def get_geometry_from_sockets(node):
+    ''' A convenience function to retrieve all input data as a list '''
+    return [dataCorrect(socket.sv_get(default=[])) for socket in node.inputs]
