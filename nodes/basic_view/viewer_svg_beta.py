@@ -33,6 +33,7 @@ from sverchok.data_structure import (
     dataCorrect, fullList, updateNode)
 
 
+''' zeffii may '16 '''
 
 def SVG_SETUP(width, height):
     svg = """\
@@ -45,8 +46,6 @@ SVG_END = """\
 """
 
 
-
-# should inherit from bmeshviewer, many of these methods are largely identical.
 class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
 
     bl_idname = 'SvGBetaViewerNode'
@@ -54,8 +53,8 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
     bl_icon = 'OUTLINER_OB_EMPTY'
 
     activate = BoolProperty(
-        name='Dostuff',
-        description='When enabled this will process incoming data',
+        name='do_stuff',
+        description='process incoming data - or not',
         default=True,
         update=updateNode)
 
@@ -67,16 +66,14 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
         inew('VerticesSocket', 'vertices')
         inew('StringsSocket', 'edges')
         inew('StringsSocket', 'faces')
-        inew('StringsSocket', 'line_width')
+        inew('StringsSocket', 'stroke_width')
         inew('VerticesSocket', 'stroke')
         inew('VerticesSocket', 'fill')
 
     def draw_buttons(self, context, layout):
-        sh = 'node.sv_callback_svgbeta_viewer'
-
         col = layout.column(align=True)
+        col.prop(self, 'activate')
         row = col.row(align=True)
-
         row.prop(self, 'output_filename')
 
     def get_geometry_from_sockets(self):
@@ -88,7 +85,8 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
         return [get(i) for i in self.inputs]
 
     def process(self):
-        if not (self.inputs['vertices'].is_linked):
+
+        if (not self.inputs['vertices'].is_linked) or (not self.activate):
             return
 
         # m is used to denote the possibility of multiple lists per socket.
