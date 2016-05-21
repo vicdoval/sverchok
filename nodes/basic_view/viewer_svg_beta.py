@@ -49,7 +49,7 @@ SVG_END = """\
 def SVG_GROUP(_class, _id, full_str):
     return """\
     <group class="%s" id="%s">
-        <path="M%s"/>
+        <path d="M%s"/>
     </group>\n""" % (_class, _id, full_str)
 
 
@@ -119,6 +119,10 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
             svg_strings.append(SVG_END)
             
             text.from_string('\n'.join(svg_strings))
+
+            with open('c:/Users/zeffi/Desktop/brown.svg', 'w') as br:
+                br.writelines(text.as_string())
+
 
 
 def register():
