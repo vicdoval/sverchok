@@ -39,7 +39,13 @@ from sverchok.data_structure import (
 def SVG_SETUP(width, height):
     svg = """\
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="%s" height="%s">""" % (width, height)
+<?xml-stylesheet type="text/css" media="screen" href="walt.css"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+              "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="8.26667in" height="11.6889in"
+     viewBox="0 0 %s %s">""" % (width, height)
     return svg
 
 SVG_END = """\
@@ -101,7 +107,7 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
         '''
 
         def reduce_dimensions(verts):
-            return ' '.join([str(v[0]) + " " + str(v[1]) for v in verts]) + 'L'
+            return ' '.join([str(v[0]) + " " + str(v[1]) for v in verts]) + ' Z'
 
 
         texts = bpy.data.texts
@@ -113,8 +119,12 @@ class SvGBetaViewerNode(bpy.types.Node, SverchCustomTreeNode):
             
             for verts in mverts:
                 verts2d = reduce_dimensions(verts)
-                dline = SVG_GROUP('grr', 'ffzzk', verts2d)
-                svg_strings.append(dline)
+                # dline = SVG_GROUP('grr', 'ffzzk', verts2d)
+                # svg_strings.append(dline)
+                for v in verts:
+                    wz = """<ellipse cx="{x}" cy="{y}" rx="14" ry="14" style="fill:yellow;stroke:purple;stroke-width:2" />"""
+                    svg_strings.append(wz.format(x=v[0], y=v[1]))
+                    
             
             svg_strings.append(SVG_END)
             
