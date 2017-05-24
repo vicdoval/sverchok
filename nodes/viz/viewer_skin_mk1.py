@@ -30,6 +30,19 @@ from sverchok.utils.sv_viewer_utils import (
     greek_alphabet, matrix_sanitizer, remove_non_updated_objects
 )
 
+def get_modifier_props(obj):
+    modifier_sequence = []
+
+    for idx, modifier in enumerate(obj.modifiers):
+        # skip the first two
+        if idx < 2:
+            continue
+        props = [p.identifier for p in modifier.bl_rna.properties if not p.is_readonly]
+        single_mod_dict = {p: getattr(modifier, p) for p in props}
+        modifier_sequence.append([modifier.name, modifier.type, single_mod_dict])
+
+    return modifier_sequence
+
 
 def set_data_for_layer(bm, data, layer):
     for i in range(len(bm.verts)):
@@ -121,6 +134,12 @@ def make_bmesh_geometry(node, context, geometry, idx, layers):
 
     if node.live_updates:
 
+        modifier_data = None
+        num_modifiers = len(obj.modifiers)
+
+        if node.regenerate_modifiers and num_modifiers > 2:
+            modifier_data = get_modifier_props(obj)
+
         if 'sv_skin' in obj.modifiers:
             sk = obj.modifiers['sv_skin']
             obj.modifiers.remove(sk)
@@ -129,10 +148,20 @@ def make_bmesh_geometry(node, context, geometry, idx, layers):
             sd = obj.modifiers['sv_subsurf']
             obj.modifiers.remove(sd)
 
+        if node.regenerate_modifiers and num_modifiers > 2:
+            obj.modifiers.clear()
+
         _ = obj.modifiers.new(type='SKIN', name='sv_skin')
         b = obj.modifiers.new(type='SUBSURF', name='sv_subsurf')
         b.levels = node.levels
         b.render_levels = node.render_levels
+
+        if node.regenerate_modifiers and num_modifiers > 2:
+            for modifier_name, modifier_type, modifier_props in modifier_data:
+                new_mod = obj.modifiers.new(modifier_name, modifier_type)
+                for mp_name, mp_value in modifier_props.items():
+                    setattr(new_mod, mp_name, mp_value)
+
 
     if matrix:
         matrix = matrix_sanitizer(matrix)
@@ -207,6 +236,7 @@ class SvSkinViewerNodeMK1b(bpy.types.Node, SverchCustomTreeNode):
         update=updateNode)
 
     material = StringProperty(default='', update=updateNode)
+    regenerate_modifiers = BoolProperty(default=False, update=updateNode)
 
 
     def sv_init(self, context):
@@ -238,6 +268,9 @@ class SvSkinViewerNodeMK1b(bpy.types.Node, SverchCustomTreeNode):
             self, 'material', bpy.data, 'materials', text='',
             icon='MATERIAL_DATA')
         r5.operator(sh, text='', icon='ZOOMIN').fn_name = 'add_material'
+
+    def draw_buttons_ext(self, context, layout):
+        layout.prop(self, "regenerate_modifiers", text='Regen User Modifiers')
 
 
     def get_geometry_from_sockets(self):
