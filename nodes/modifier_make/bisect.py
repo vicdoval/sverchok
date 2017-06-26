@@ -97,10 +97,15 @@ class SvBisectNode(bpy.types.Node, SverchCustomTreeNode):
         name='fill', description='Fill cuts', 
         default=False, update=updateNode)
 
-    slice_mode = BoolProperty(
-        name="Per Object", update=updateNode, default=False,
-        description="slice each object with all matrices, or match object and matrices individually"
+
+    mode_options = [(k, k, '', i) for i, k in enumerate(["P/Obj", "P/Matx", "M/Obj"])]
+    
+    slice_mode = bpy.props.EnumProperty(
+        items=mode_options,
+        description="offers 1) per object, 2) per matrix and 3) matrix list per object",
+        default="P/Obj", update=updateNode
     )
+
 
     def sv_init(self, context):
         self.inputs.new('VerticesSocket', 'vertices')
@@ -113,12 +118,12 @@ class SvBisectNode(bpy.types.Node, SverchCustomTreeNode):
 
     def draw_buttons(self, context, layout):
         row = layout.row(align=True)
-        row.prop(self, 'inner', text="Inner", toggle=True)
-        row.prop(self, 'outer', text="Outer", toggle=True)
-        row = layout.row(align=True)
+        row.prop(self, 'inner', text="In", toggle=True)
+        row.prop(self, 'outer', text="Out", toggle=True)
         row.prop(self, 'fill', text="Fill", toggle=True)
+        row = layout.row(align=True)
         if hasattr(self, 'slice_mode'):
-            row.prop(self, 'slice_mode', toggle=True)
+            row.prop(self, 'slice_mode', expand=True)
 
     def process(self):
 
@@ -136,7 +141,8 @@ class SvBisectNode(bpy.types.Node, SverchCustomTreeNode):
         edges_out = []
         polys_out = []
 
-        if not hasattr(self, 'slice_mode') or not self.slice_mode:
+        if not hasattr(self, 'slice_mode') or self.slice_mode == 'P/Matx':
+            # ALL MATRICES ALL OBJECTS
 
             for cut_mat in cut_mats:
                 pp = cut_mat.to_translation()
@@ -149,8 +155,25 @@ class SvBisectNode(bpy.types.Node, SverchCustomTreeNode):
                     edges_out.append(res[1])
                     polys_out.append(res[2])
         
+        elif self.slice_mode == 'M/Obj':
+            # FOR EACH SUBLIST OF MATRICES, APPLY TO CORRESPONDING OBJECT
+            
+            for idx, sub_matrix_list, (obj) in enumerate(zip(cut_mats, verts_ob, edg_pols)):
+                for idx2, cut_mat in enumerate(sub_matrix_list):
+                    cut_mat = cut_mats[idx2 if idx2 < len(cut_mats) else -1]
+                    pp = cut_mat.to_translation()
+                    pno = Vector((0.0, 0.0, 1.0)) * cut_mat.to_3x3().transposed()
+            
+                    res = bisect(obj[0], obj[1], pp, pno, self.outer, self.inner, self.fill)
+                    if not res:
+                        return
+                    verts_out.append(res[0])
+                    edges_out.append(res[1])
+                    polys_out.append(res[2])    
+
         else:
 
+            # PER OBJECT
             for idx, (obj) in enumerate(zip(verts_ob, edg_pols)):
 
                 cut_mat = cut_mats[idx if idx < len(cut_mats) else -1]
