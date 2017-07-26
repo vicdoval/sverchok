@@ -30,56 +30,34 @@ from sverchok.data_structure import updateNode
 from sverchok.utils.sv_bmesh_utils import bmesh_from_pydata
 
 
+
 def generate_random_unitvectors():
-    # may need many more directions to increase accuracy
-    # generate up to 6 directions, filter later
+    # up to 6 directions to increase accuracy, filter later
     seed_set(140230)
     return [random_unit_vector() for i in range(6)]
 
 directions = generate_random_unitvectors()
 
 
+hit_threshold = {2:1, 3:2, 4:3, 5:4, 6:4}
+
 def get_points_in_mesh(points, verts, faces, eps=0.0, num_samples=3):
     mask_inside = []
+    add_mask = mask_inside.append
 
     bvh = BVHTree.FromPolygons(verts, faces, all_triangles=False, epsilon=eps)
 
     for direction in directions[:num_samples]:
-        samples = []
-        mask = samples.append
-        
-        for point in points:
-            hit = bvh.ray_cast(point, direction)
-            if hit[0]:
-                v = hit[1].dot(direction)
-                mask(not v < 0.0)
-            else:
-                mask(False)
-
-        mask_inside.append(samples)
+        hits = (bvh.ray_cast(point, direction) for point in points)
+        samples = [(not hit[1].dot(direction) < 0.0 if hit[0] else False) for hit in hits]
+        add_mask(samples)    
     
     if len(mask_inside) == 1:
         return mask_inside[0]
     else:
-        mask_totals = []
-        oversample = mask_totals.append
         num_points = len(points)
-
-        # exactly what the criteria should be here is not clear, this seems enough.
-        for i in range(num_points):
-            fsum = sum(mask_inside[j][i] for j in range(num_samples))
-
-            if num_samples == 2:
-                oversample(fsum >= 1)
-            elif num_samples == 3:
-                oversample(fsum >= 2)
-            elif num_samples == 4:
-                oversample(fsum >= 3)
-            elif num_samples == 5:
-                oversample(fsum >= 4)
-            elif num_samples == 6:
-                oversample(fsum >= 4)
-        return mask_totals       
+        t = hit_threshold.get(num_samples)
+        return [(sum(mask_inside[j][i] for j in range(num_samples)) >= t) for i in range(num_points)]
 
 
 def are_inside(points, bm):
