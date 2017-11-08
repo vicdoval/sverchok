@@ -82,9 +82,9 @@ emptyQuaternion = [[(1, 0, 0, 0)]]
 def process_from_socket(self, context):
     """Update function of exposed properties in Sockets"""
     self.node.process_node(context)
+
+
 # this property group is only used by the old viewer draw
-
-
 class SvColors(bpy.types.PropertyGroup):
     """ Class for colors CollectionProperty """
     color = FloatVectorProperty(
