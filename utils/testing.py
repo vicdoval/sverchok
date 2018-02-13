@@ -3,6 +3,7 @@ import bpy
 import os
 from os.path import dirname, basename, join
 import unittest
+import unittest.mock
 import json
 from io import StringIO
 import logging
@@ -10,9 +11,10 @@ from contextlib import contextmanager
 import ast
 
 import sverchok
+from sverchok.old_nodes import is_old
 from sverchok.data_structure import get_data_nesting_level
 from sverchok.core.socket_data import SvNoDataError, get_output_socket_data
-from sverchok.utils.logging import debug, info
+from sverchok.utils.logging import debug, info, exception
 from sverchok.utils.context_managers import sv_preferences
 from sverchok.utils.sv_IO_panel_tools import import_tree
 
@@ -384,6 +386,62 @@ class SverchokTestCase(unittest.TestCase):
         #info("Expected data: %s", expected_data)
         self.assert_sverchok_data_equal(data, expected_data, precision=precision)
         #self.assertEquals(data, expected_data)
+    
+    @contextmanager
+    def assert_prints_stdout(self, regexp):
+        """
+        Assert that the code prints something matching regexp to stdout.
+        Usage:
+
+            with self.assert_prints_stdout("hello"):
+                print("hello world")
+
+        """
+        with unittest.mock.patch('sys.stdout', new=StringIO()) as fake_stdout:
+            yield fake_stdout
+            self.assertRegex(fake_stdout.getvalue(), regexp)
+
+    @contextmanager
+    def assert_not_prints_stdout(self, regexp):
+        """
+        Assert that the code does not print anything matching regexp to stdout.
+        Usage:
+
+            with self.assert_not_prints_stdout("hello"):
+                print("goodbye")
+
+        """
+        with unittest.mock.patch('sys.stdout', new=StringIO()) as fake_stdout:
+            yield fake_stdout
+            self.assertNotRegex(fake_stdout.getvalue(), regexp)
+
+    @contextmanager
+    def assert_logs_no_errors(self):
+        """
+        Assert that the code does not write any ERROR to the log.
+        Usage:
+
+            with self.assert_logs_no_errors():
+                info("this is just an information, not error")
+
+        """
+
+        has_errors = False
+
+        class Handler(logging.Handler):
+            def emit(self, record):
+                nonlocal has_errors
+                if record.levelno >= logging.ERROR:
+                    has_errors = True
+
+        handler = Handler()
+        logging.getLogger().addHandler(handler)
+
+        try:
+            yield handler
+            self.assertFalse(has_errors, "There were some errors logged")
+        finally:
+            logging.getLogger().handlers.remove(handler)
 
     def subtest_assert_equals(self, value1, value2, message=None):
         """
@@ -578,6 +636,36 @@ def branches_only(*branches):
     """
     return make_skip_decorator(lambda: get_ci_branch() not in branches, "Does not apply to this branch")
 
+def batch_only(func):
+    """
+    Decorator for tests that are to be executed in batch mode only
+    (i.e. when tests are run from command line, either locally or in CI
+    environment). Usage:
+
+        @batch_only
+        def test_something(self):
+            ...
+    """
+    if bpy.app.background:
+        return func
+    else:
+        return unittest.skip("This test is intended for batch mode only")(func)
+
+def interactive_only(func):
+    """
+    Decorator for tests that are to be executed in interactive mode only
+    (i.e. when tests are run from Blender's UI with "Run all tests" button).
+    Usage:
+
+        @interactive_only
+        def test_something(self):
+            ...
+    """
+    if not bpy.app.background:
+        return func
+    else:
+        return unittest.skip("This test is intended for interactive mode only")(func)
+
 ######################################################
 # UI operator and panel classes
 ######################################################
@@ -618,6 +706,27 @@ class SvDumpNodeDef(bpy.types.Operator):
 
         return {'FINISHED'}
 
+class SvListOldNodes(bpy.types.Operator):
+    """
+    Print names and bl_idnames of all
+    deprecated nodes (old_nodes) in the current
+    node tree.
+    """
+
+    bl_idname = "node.sv_testing_list_old_nodes"
+    bl_label = "List old nodes"
+    bl_options = {'INTERNAL'}
+
+    def execute(self, context):
+        ntree = context.space_data.node_tree
+
+        for node in ntree.nodes:
+            if is_old(node):
+                info("Deprecated node: `%s' (%s)", node.name, node.bl_idname)
+
+        self.report({'INFO'}, "See logs")
+        return {'FINISHED'}
+
 class SvTestingPanel(bpy.types.Panel):
     bl_idname = "SvTestingPanel"
     bl_label = "SV Testing"
@@ -639,22 +748,29 @@ class SvTestingPanel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         layout.operator("node.sv_testing_run_all_tests")
+        layout.operator("node.sv_testing_list_old_nodes")
         layout.operator("node.sv_testing_dump_node_def")
 
-classes = [SvRunTests, SvDumpNodeDef, SvTestingPanel]
+classes = [SvRunTests, SvDumpNodeDef, SvListOldNodes, SvTestingPanel]
 
 def register():
     for clazz in classes:
-        bpy.utils.register_class(clazz)
+        try:
+            bpy.utils.register_class(clazz)
+        except Exception as e:
+            exception("Cant register class %s: %s", clazz, e)
 
 def unregister():
     for clazz in reversed(classes):
-        bpy.utils.unregister_class(clazz)
+        try:
+            bpy.utils.unregister_class(clazz)
+        except Exception as e:
+            exception("Cant unregister class %s: %s", clazz, e)
 
 if __name__ == "__main__":
     import sys
     try:
-        register()
+        #register()
         result = run_all_tests()
         if not result.wasSuccessful():
             # We have to raise an exception for Blender to exit with specified exit code.
