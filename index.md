@@ -320,3 +320,4 @@
     SvMultiExtrudeAlt
     SvOffsetLineNode
     SvContourNode
+    SvVoronoiArcNode
