@@ -31,7 +31,7 @@ def icosahedron_cylindrical(r):
 
     d = 2.0/sqrt(5)
 
-    # Calculate icosahedron vertices in cylindrical coordinates 
+    # Calculate icosahedron vertices in cylindrical coordinates
     vertices = []
     vertices.append((0, 0, r))
     for i in range(5):
@@ -56,7 +56,7 @@ def icosahedron_cylindrical(r):
     edges.append((6,10))
     for i in range(6,11):
         edges.append((i, 11))
-        
+
     faces = []
     for i in range(1,5):
         faces.append([0, i, i+1])
@@ -86,6 +86,7 @@ class SvIcosphereNode(bpy.types.Node, SverchCustomTreeNode):
     bl_icon = 'MESH_ICOSPHERE'
 
     replacement_nodes = [('SphereNode', None, dict(Faces='Polygons'))]
+    cache ={}
 
     def set_subdivisions(self, value):
         # print(value, self.subdivisions_max)
@@ -108,7 +109,7 @@ class SvIcosphereNode(bpy.types.Node, SverchCustomTreeNode):
         name = "Max. Subdivisions", description = "Maximum number of subdivisions available",
         default = 5, min=2,
         update=updateNode)
-    
+
     radius: FloatProperty(
         name = "Radius",
         default=1.0, min=0.0,
@@ -116,7 +117,7 @@ class SvIcosphereNode(bpy.types.Node, SverchCustomTreeNode):
 
     def sv_init(self, context):
         self['subdivisions'] = 2
-        
+
         self.inputs.new('StringsSocket', 'Subdivisions').prop_name = 'subdivisions'
         self.inputs.new('StringsSocket', 'Radius').prop_name = 'radius'
 
@@ -126,6 +127,20 @@ class SvIcosphereNode(bpy.types.Node, SverchCustomTreeNode):
 
     def draw_buttons_ext(self, context, layout):
         layout.prop(self, "subdivisions_max")
+
+    def memory_check(self, meshes):
+        '''check if input is the same as stored in cache'''
+        update = True
+        if not "in" in self.cache:
+            self.cache["in"] = meshes
+        else:
+            if not meshes == self.cache["in"]:
+                self.cache["in"] = meshes
+                update = True
+            else:
+                update = False
+
+        return update
 
     def process(self):
         # return if no outputs are connected
@@ -141,28 +156,33 @@ class SvIcosphereNode(bpy.types.Node, SverchCustomTreeNode):
 
         objects = match_long_repeat([subdivisions_s, radius_s])
 
-        for subdivisions, radius in zip(*objects):
-            if subdivisions == 0:
-                # In this case we just return the icosahedron
-                verts, edges, faces = icosahedron(radius)
+        if self.memory_check(objects):
+            for subdivisions, radius in zip(*objects):
+                if subdivisions == 0:
+                    # In this case we just return the icosahedron
+                    verts, edges, faces = icosahedron(radius)
+                    out_verts.append(verts)
+                    out_edges.append(edges)
+                    out_faces.append(faces)
+                    continue
+
+                if subdivisions > self.subdivisions_max:
+                    subdivisions = self.subdivisions_max
+
+                bm = bmesh.new()
+                bmesh.ops.create_icosphere(bm,
+                        subdivisions = subdivisions,
+                        diameter = radius)
+                verts, edges, faces = pydata_from_bmesh(bm)
+                bm.free()
+
                 out_verts.append(verts)
                 out_edges.append(edges)
                 out_faces.append(faces)
-                continue
+            self.cache['out'] = [out_verts, out_edges, out_faces]
 
-            if subdivisions > self.subdivisions_max:
-                subdivisions = self.subdivisions_max
-            
-            bm = bmesh.new()
-            bmesh.ops.create_icosphere(bm,
-                    subdivisions = subdivisions,
-                    diameter = radius)
-            verts, edges, faces = pydata_from_bmesh(bm)
-            bm.free()
-
-            out_verts.append(verts)
-            out_edges.append(edges)
-            out_faces.append(faces)
+        else:
+            out_verts, out_edges, out_faces = self.cache['out']
 
         self.outputs['Vertices'].sv_set(out_verts)
         self.outputs['Edges'].sv_set(out_edges)

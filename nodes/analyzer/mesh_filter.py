@@ -70,7 +70,11 @@ class Vertices(object):
                 return v.is_boundary
             if submode == "Interior":
                 return (v.is_manifold and not v.is_boundary)
-
+        good_v = {
+            "Wire": lambda e: e.is_wire,
+            "Boundary": lambda e: e.is_boundary,
+            "Interior": lambda e: v.is_manifold and not v.is_boundary,}
+            
         good = []
         bad = []
 
@@ -204,7 +208,7 @@ class SvMeshFilterNode(bpy.types.Node, SverchCustomTreeNode):
     bl_idname = 'SvMeshFilterNode'
     bl_label = 'Mesh filter'
     bl_icon = 'FILTER'
-
+    cache = {}    
     modes = [
             ("Vertices", "Vertices", "Filter vertices", 0),
             ("Edges", "Edges", "Filter edges", 1),
@@ -219,8 +223,8 @@ class SvMeshFilterNode(bpy.types.Node, SverchCustomTreeNode):
             self.outputs.new(ocls, oname)
         if hasattr(cls, "default_submode"):
             self.submode = cls.default_submode
-        else:
-            self.submode = None
+        # else:
+            # self.submode = "Boundary"
         updateNode(self, context)
 
     def update_submode(self, context):
@@ -259,6 +263,22 @@ class SvMeshFilterNode(bpy.types.Node, SverchCustomTreeNode):
         self.update_mode(context)
         self.update_submode(context)
 
+    def memory_check(self, meshes):
+        '''check if input is the same as the stored in cache'''
+        update = True
+        if not "in" in self.cache:
+            self.cache["in"] = meshes 
+            self.cache["mode"] = (self.mode, self.submode)
+        else:
+            same = (meshes == self.cache["in"] )and (self.cache["mode"] == (self.mode, self.submode))
+            if not same:
+                self.cache["in"] = meshes
+                self.cache["mode"] = (self.mode, self.submode)
+                update = True
+            else:
+                update = False
+        return update
+        
     def process(self):
 
         if not any(output.is_linked for output in self.outputs):
@@ -269,17 +289,25 @@ class SvMeshFilterNode(bpy.types.Node, SverchCustomTreeNode):
         faces_s = self.inputs['Polygons'].sv_get(default=[[]])
 
         cls = globals()[self.mode]
-        results = []
-
+        
         meshes = match_long_repeat([vertices_s, edges_s, faces_s])
-        for vertices, edges, faces in zip(*meshes):
-            bm = bmesh_from_pydata(vertices, edges, faces)
-            bm.normal_update()
-            outs = cls.process(bm, self.submode)
-            results.append(outs)
+              
+        if self.memory_check(meshes):
+        
+            results = []
+            for vertices, edges, faces in zip(*meshes):
+                bm = bmesh_from_pydata(vertices, edges, faces)
+                bm.normal_update()
+                outs = cls.process(bm, self.submode)
+                results.append(outs)
+            
+            self.cache["out"] = results
 
-        results = zip(*results)
-        for (ocls,oname), result in zip(cls.outputs, results):
+        else:
+            results = self.cache["out"]
+
+    
+        for (ocls,oname), result in zip(cls.outputs, zip(*results)):
             if self.outputs[oname].is_linked:
                 self.outputs[oname].sv_set(result)
 
