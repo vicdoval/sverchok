@@ -52,7 +52,13 @@
     SvVolumeNode
     AreaNode
     DistancePPNode
-    DistancePointLineNode
+    SvDistancePointLineNode
+    SvDistancePointPlaneNode
+    SvIntersectLineLineNode
+    SvIntersectPlanePlaneNode
+    SvIntersectCircleCircleNode
+    SvIntersectLineSphereNode
+    SvBarycentricTransformNode
     SvPathLengthNode
     CentersPolsNodeMK2
     CentersPolsNodeMK3
