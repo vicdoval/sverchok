@@ -233,37 +233,40 @@ class SvLayoutScanProperties(bpy.types.Operator):
 
         return {'FINISHED'}
 
-def bake_animation_to_shapekeys(context):
-    original_name = bpy.context.active_object.name
-    first_frame = bpy.context.scene.frame_start
-    end_frame = bpy.context.scene.frame_end
-    bpy.context.scene.frame_current = first_frame
+def bake_animation_to_shapekeys(context, data):
+    '''Moves along animation range duplicating the updated object and merging it with a new object as a shapekey'''
+    original_name = context.active_object.name
+    first_frame = context.scene.frame_start
+    end_frame = context.scene.frame_end
+    context.scene.frame_current = first_frame
     bpy.ops.node.sverchok_update_all()
     bpy.ops.object.duplicate()
-    bpy.context.active_object.name = 'Baked_' + original_name
-    bpy.context.active_object.data.name = 'Baked_' + original_name
-    bpy.data.objects[original_name].select_set(state=True)
+    context.active_object.name = 'Baked_' + original_name
+    context.active_object.data.name = 'Baked_' + original_name
+    data.objects[original_name].select_set(state=True)
     bpy.ops.object.join_shapes()
-    for actFrame in range(first_frame+1, end_frame+1):
-        bpy.context.scene.frame_current = actFrame
+    for actual_frame in range(first_frame + 1, end_frame + 1):
+        print("Baking "+ original_name + ", frame number:" +  str(actual_frame))
+        context.scene.frame_current = actual_frame
         bpy.ops.node.sverchok_update_all()
-
         bpy.ops.object.join_shapes()
-        bpy.context.object.active_shape_key_index = actFrame-1
-        keys_name = bpy.context.object.data.shape_keys.name
-        k = bpy.data.shape_keys[keys_name]
-        k.key_blocks[-1].value = 1
-        name = bpy.data.shape_keys[keys_name].key_blocks[-1].name
-        bpy.data.shape_keys[keys_name].keyframe_insert(data_path='key_blocks["'+ name +'"].value')
-        k.key_blocks[-2].value = 0
-        name_p = bpy.data.shape_keys[keys_name].key_blocks[-2].name
-        bpy.data.shape_keys[keys_name].keyframe_insert(data_path='key_blocks["'+ name_p +'"].value')
-        bpy.context.scene.frame_current = actFrame-1
-        k.key_blocks[-1].value = 0
-        bpy.data.shape_keys[keys_name].keyframe_insert(data_path='key_blocks["'+ name +'"].value')
+        context.object.active_shape_key_index = actual_frame - 1
+        keys_name = context.object.data.shape_keys.name
+        object_shape_keys = data.shape_keys[keys_name]
+        object_shape_keys.key_blocks[-1].value = 1
+        name = data.shape_keys[keys_name].key_blocks[-1].name
+        shapekey_data_path = 'key_blocks["'+ name +'"].value'
+        data.shape_keys[keys_name].keyframe_insert(data_path=shapekey_data_path)
+        object_shape_keys.key_blocks[-2].value = 0
+        name_p = data.shape_keys[keys_name].key_blocks[-2].name
+        shapekey_data_path_p = 'key_blocks["'+ name_p +'"].value'
+        data.shape_keys[keys_name].keyframe_insert(data_path=shapekey_data_path_p)
+        context.scene.frame_current = actual_frame - 1
+        object_shape_keys.key_blocks[-1].value = 0
+        data.shape_keys[keys_name].keyframe_insert(data_path=shapekey_data_path)
 
 class SvBakeAnimationToShapekeys(bpy.types.Operator):
-    """Bake active object animation to shapekeys"""
+    """Bake active object animation to new object with shapekeys"""
     bl_idname = "object.bake_animation_to_shapekeys"
     bl_label = "Bake Sverchok Animation to Shapekeys"
 
@@ -272,7 +275,8 @@ class SvBakeAnimationToShapekeys(bpy.types.Operator):
         return context.active_object is not None
 
     def execute(self, context):
-        bake_animation_to_shapekeys(context)
+        data = bpy.data
+        bake_animation_to_shapekeys(context, data)
         return {'FINISHED'}
 
 sv_tools_classes = [
