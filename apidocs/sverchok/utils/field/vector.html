@@ -1,0 +1,1538 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>sverchok.utils.field.vector API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>sverchok.utils.field.vector</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="sverchok.utils.field.vector.SvAbsoluteVectorField"><code class="flex name class">
+<span>class <span class="ident">SvAbsoluteVectorField</span></span>
+<span>(</span><span>field)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SvAbsoluteVectorField(SvVectorField):
+    def __init__(self, field):
+        self.field = field
+        self.__description__ = &#34;Absolute({})&#34;.format(field)
+
+    def evaluate(self, x, y, z):
+        r = self.field.evaluate(x, y, z)
+        return r + np.array([x, y, z])
+
+    def evaluate_grid(self, xs, ys, zs):
+        rxs, rys, rzs = self.field.evaluate_grid(xs, ys, zs)
+        return rxs + xs, rys + ys, rzs + zs</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sverchok.utils.field.vector.SvVectorField" href="#sverchok.utils.field.vector.SvVectorField">SvVectorField</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sverchok.utils.field.vector.SvAbsoluteVectorField.evaluate"><code class="name flex">
+<span>def <span class="ident">evaluate</span></span>(<span>self, x, y, z)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate(self, x, y, z):
+    r = self.field.evaluate(x, y, z)
+    return r + np.array([x, y, z])</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvAbsoluteVectorField.evaluate_grid"><code class="name flex">
+<span>def <span class="ident">evaluate_grid</span></span>(<span>self, xs, ys, zs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_grid(self, xs, ys, zs):
+    rxs, rys, rzs = self.field.evaluate_grid(xs, ys, zs)
+    return rxs + xs, rys + ys, rzs + zs</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongCurveField"><code class="flex name class">
+<span>class <span class="ident">SvBendAlongCurveField</span></span>
+<span>(</span><span>curve,<br>algorithm,<br>scale_all,<br>axis,<br>t_min,<br>t_max,<br>up_axis=None,<br>resolution=50,<br>length_mode='T')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SvBendAlongCurveField(SvVectorField):
+
+    ZERO = &#39;ZERO&#39;
+    FRENET = &#39;FRENET&#39;
+    HOUSEHOLDER = &#39;householder&#39;
+    TRACK = &#39;track&#39;
+    DIFF = &#39;diff&#39;
+    TRACK_NORMAL = &#39;track_normal&#39;
+
+    def __init__(self, curve, algorithm, scale_all, axis, t_min, t_max, up_axis=None, resolution=50, length_mode=&#39;T&#39;):
+        self.curve = curve
+        self.axis = axis
+        self.t_min = t_min
+        self.t_max = t_max
+        self.algorithm = algorithm
+        self.scale_all = scale_all
+        self.up_axis = up_axis
+        self.length_mode = length_mode
+        if algorithm == SvBendAlongCurveField.ZERO:
+            self.curve.pre_calc_torsion_integral(resolution)
+        elif algorithm == SvBendAlongCurveField.TRACK_NORMAL:
+            self.normal_tracker = SvNormalTrack(curve, resolution)
+        if length_mode == &#39;L&#39;:
+            self.length_solver = SvCurveLengthSolver(curve)
+            self.length_solver.prepare(&#39;SPL&#39;, resolution)
+        self.__description__ = &#34;Bend along {}&#34;.format(curve)
+
+    def get_matrix(self, tangent, scale):
+        return MathutilsRotationCalculator.get_matrix(tangent, scale, self.axis,
+                    self.algorithm, self.scale_all, self.up_axis)
+
+    def get_matrices(self, ts, scale):
+        n = len(ts)
+        if self.scale_all:
+            scale_matrix = np.array([
+                [scale, 0, 0],
+                [0, scale, 0],
+                [0, 0, 1/scale]
+            ])
+        else:
+            scale_matrix = np.array([
+                [1, 0, 0],
+                [0, 1, 0],
+                [0, 0, 1/scale]
+            ])
+        if self.algorithm == SvBendAlongCurveField.FRENET:
+            frenet, _ , _ = self.curve.frame_array(ts)
+            return frenet @ scale_matrix
+        elif self.algorithm == SvBendAlongCurveField.ZERO:
+            frenet, _ , _ = self.curve.frame_array(ts)
+            angles = - self.curve.torsion_integral(ts)
+            zeros = np.zeros((n,))
+            ones = np.ones((n,))
+            row1 = np.stack((np.cos(angles), np.sin(angles), zeros)).T # (n, 3)
+            row2 = np.stack((-np.sin(angles), np.cos(angles), zeros)).T # (n, 3)
+            row3 = np.stack((zeros, zeros, ones)).T # (n, 3)
+            rotation_matrices = np.dstack((row1, row2, row3))
+            return frenet @ rotation_matrices @ scale_matrix
+        elif self.algorithm == SvBendAlongCurveField.TRACK_NORMAL:
+            matrices = self.normal_tracker.evaluate_array(ts)
+            return matrices @ scale_matrix
+        else:
+            raise Exception(&#34;Unsupported algorithm&#34;)
+
+    def get_t_value(self, x, y, z):
+        curve_t_min, curve_t_max = self.curve.get_u_bounds()
+        t = [x, y, z][self.axis]
+        if self.length_mode == &#39;T&#39;:
+            t = (curve_t_max - curve_t_min) * (t - self.t_min) / (self.t_max - self.t_min) + curve_t_min
+        else:
+            t = (t - self.t_min) / (self.t_max - self.t_min) # 0 .. 1
+            t = t * self.length_solver.get_total_length()
+            t = self.length_solver.solve(np.array([t]))[0]
+        return t
+
+    def get_t_values(self, xs, ys, zs):
+        curve_t_min, curve_t_max = self.curve.get_u_bounds()
+        ts = [xs, ys, zs][self.axis]
+        if self.length_mode == &#39;T&#39;:
+            ts = (curve_t_max - curve_t_min) * (ts - self.t_min) / (self.t_max - self.t_min) + curve_t_min
+        else:
+            ts = (ts - self.t_min) / (self.t_max - self.t_min) # 0 .. 1
+            ts = ts * self.length_solver.get_total_length()
+            ts = self.length_solver.solve(ts)
+        return ts
+
+    def get_scale(self):
+        if self.length_mode == &#39;T&#39;:
+            curve_t_min, curve_t_max = self.curve.get_u_bounds()
+            t_range = curve_t_max - curve_t_min
+        else:
+            t_range = self.length_solver.get_total_length()
+        return (self.t_max - self.t_min) / t_range
+
+    def evaluate(self, x, y, z):
+        t = self.get_t_value(x, y, z)
+        spline_tangent = self.curve.tangent(t)
+        spline_vertex = self.curve.evaluate(t)
+        scale = self.get_scale()
+        if self.algorithm in {SvBendAlongCurveField.ZERO, SvBendAlongCurveField.FRENET, SvBendAlongCurveField.TRACK_NORMAL}:
+            matrix = self.get_matrices(np.array([t]), scale)
+        else:
+            matrix = self.get_matrix(spline_tangent, scale)
+        src_vector_projection = np.array([x, y, z])
+        src_vector_projection[self.axis] = 0
+        new_vertex = np.matmul(matrix, src_vector_projection) + spline_vertex
+        vector = new_vertex - np.array([x, y, z])
+        return vector
+
+    def evaluate_grid(self, xs, ys, zs):
+        def multiply(matrices, vectors):
+            vectors = vectors[np.newaxis]
+            vectors = np.transpose(vectors, axes=(1,2,0))
+            r = matrices @ vectors
+            return r[:,:,0]
+
+        ts = self.get_t_values(xs, ys, zs).flatten()
+        spline_tangents = self.curve.tangent_array(ts)
+        spline_vertices = self.curve.evaluate_array(ts)
+        scale = self.get_scale()
+        if self.algorithm in {SvBendAlongCurveField.ZERO, SvBendAlongCurveField.FRENET, SvBendAlongCurveField.TRACK_NORMAL}:
+            matrices = self.get_matrices(ts, scale)
+        else:
+            matrices = np.vectorize(lambda t : self.get_matrix(t, scale), signature=&#39;(3)-&gt;(3,3)&#39;)(spline_tangents)
+        src_vectors = np.stack((xs, ys, zs)).T
+        src_vector_projections = src_vectors.copy()
+        src_vector_projections[:,self.axis] = 0
+        #multiply = np.vectorize(lambda m, v: m @ v, signature=&#39;(3,3),(3)-&gt;(3)&#39;)
+        new_vertices = multiply(matrices, src_vector_projections) + spline_vertices
+        R = (new_vertices - src_vectors).T
+        return R[0], R[1], R[2]</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sverchok.utils.field.vector.SvVectorField" href="#sverchok.utils.field.vector.SvVectorField">SvVectorField</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="sverchok.utils.field.vector.SvBendAlongCurveField.DIFF"><code class="name">var <span class="ident">DIFF</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongCurveField.FRENET"><code class="name">var <span class="ident">FRENET</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongCurveField.HOUSEHOLDER"><code class="name">var <span class="ident">HOUSEHOLDER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongCurveField.TRACK"><code class="name">var <span class="ident">TRACK</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongCurveField.TRACK_NORMAL"><code class="name">var <span class="ident">TRACK_NORMAL</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongCurveField.ZERO"><code class="name">var <span class="ident">ZERO</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="sverchok.utils.field.vector.SvBendAlongCurveField.evaluate"><code class="name flex">
+<span>def <span class="ident">evaluate</span></span>(<span>self, x, y, z)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate(self, x, y, z):
+    t = self.get_t_value(x, y, z)
+    spline_tangent = self.curve.tangent(t)
+    spline_vertex = self.curve.evaluate(t)
+    scale = self.get_scale()
+    if self.algorithm in {SvBendAlongCurveField.ZERO, SvBendAlongCurveField.FRENET, SvBendAlongCurveField.TRACK_NORMAL}:
+        matrix = self.get_matrices(np.array([t]), scale)
+    else:
+        matrix = self.get_matrix(spline_tangent, scale)
+    src_vector_projection = np.array([x, y, z])
+    src_vector_projection[self.axis] = 0
+    new_vertex = np.matmul(matrix, src_vector_projection) + spline_vertex
+    vector = new_vertex - np.array([x, y, z])
+    return vector</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongCurveField.evaluate_grid"><code class="name flex">
+<span>def <span class="ident">evaluate_grid</span></span>(<span>self, xs, ys, zs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_grid(self, xs, ys, zs):
+    def multiply(matrices, vectors):
+        vectors = vectors[np.newaxis]
+        vectors = np.transpose(vectors, axes=(1,2,0))
+        r = matrices @ vectors
+        return r[:,:,0]
+
+    ts = self.get_t_values(xs, ys, zs).flatten()
+    spline_tangents = self.curve.tangent_array(ts)
+    spline_vertices = self.curve.evaluate_array(ts)
+    scale = self.get_scale()
+    if self.algorithm in {SvBendAlongCurveField.ZERO, SvBendAlongCurveField.FRENET, SvBendAlongCurveField.TRACK_NORMAL}:
+        matrices = self.get_matrices(ts, scale)
+    else:
+        matrices = np.vectorize(lambda t : self.get_matrix(t, scale), signature=&#39;(3)-&gt;(3,3)&#39;)(spline_tangents)
+    src_vectors = np.stack((xs, ys, zs)).T
+    src_vector_projections = src_vectors.copy()
+    src_vector_projections[:,self.axis] = 0
+    #multiply = np.vectorize(lambda m, v: m @ v, signature=&#39;(3,3),(3)-&gt;(3)&#39;)
+    new_vertices = multiply(matrices, src_vector_projections) + spline_vertices
+    R = (new_vertices - src_vectors).T
+    return R[0], R[1], R[2]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongCurveField.get_matrices"><code class="name flex">
+<span>def <span class="ident">get_matrices</span></span>(<span>self, ts, scale)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_matrices(self, ts, scale):
+    n = len(ts)
+    if self.scale_all:
+        scale_matrix = np.array([
+            [scale, 0, 0],
+            [0, scale, 0],
+            [0, 0, 1/scale]
+        ])
+    else:
+        scale_matrix = np.array([
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1/scale]
+        ])
+    if self.algorithm == SvBendAlongCurveField.FRENET:
+        frenet, _ , _ = self.curve.frame_array(ts)
+        return frenet @ scale_matrix
+    elif self.algorithm == SvBendAlongCurveField.ZERO:
+        frenet, _ , _ = self.curve.frame_array(ts)
+        angles = - self.curve.torsion_integral(ts)
+        zeros = np.zeros((n,))
+        ones = np.ones((n,))
+        row1 = np.stack((np.cos(angles), np.sin(angles), zeros)).T # (n, 3)
+        row2 = np.stack((-np.sin(angles), np.cos(angles), zeros)).T # (n, 3)
+        row3 = np.stack((zeros, zeros, ones)).T # (n, 3)
+        rotation_matrices = np.dstack((row1, row2, row3))
+        return frenet @ rotation_matrices @ scale_matrix
+    elif self.algorithm == SvBendAlongCurveField.TRACK_NORMAL:
+        matrices = self.normal_tracker.evaluate_array(ts)
+        return matrices @ scale_matrix
+    else:
+        raise Exception(&#34;Unsupported algorithm&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongCurveField.get_matrix"><code class="name flex">
+<span>def <span class="ident">get_matrix</span></span>(<span>self, tangent, scale)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_matrix(self, tangent, scale):
+    return MathutilsRotationCalculator.get_matrix(tangent, scale, self.axis,
+                self.algorithm, self.scale_all, self.up_axis)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongCurveField.get_scale"><code class="name flex">
+<span>def <span class="ident">get_scale</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_scale(self):
+    if self.length_mode == &#39;T&#39;:
+        curve_t_min, curve_t_max = self.curve.get_u_bounds()
+        t_range = curve_t_max - curve_t_min
+    else:
+        t_range = self.length_solver.get_total_length()
+    return (self.t_max - self.t_min) / t_range</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongCurveField.get_t_value"><code class="name flex">
+<span>def <span class="ident">get_t_value</span></span>(<span>self, x, y, z)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_t_value(self, x, y, z):
+    curve_t_min, curve_t_max = self.curve.get_u_bounds()
+    t = [x, y, z][self.axis]
+    if self.length_mode == &#39;T&#39;:
+        t = (curve_t_max - curve_t_min) * (t - self.t_min) / (self.t_max - self.t_min) + curve_t_min
+    else:
+        t = (t - self.t_min) / (self.t_max - self.t_min) # 0 .. 1
+        t = t * self.length_solver.get_total_length()
+        t = self.length_solver.solve(np.array([t]))[0]
+    return t</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongCurveField.get_t_values"><code class="name flex">
+<span>def <span class="ident">get_t_values</span></span>(<span>self, xs, ys, zs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_t_values(self, xs, ys, zs):
+    curve_t_min, curve_t_max = self.curve.get_u_bounds()
+    ts = [xs, ys, zs][self.axis]
+    if self.length_mode == &#39;T&#39;:
+        ts = (curve_t_max - curve_t_min) * (ts - self.t_min) / (self.t_max - self.t_min) + curve_t_min
+    else:
+        ts = (ts - self.t_min) / (self.t_max - self.t_min) # 0 .. 1
+        ts = ts * self.length_solver.get_total_length()
+        ts = self.length_solver.solve(ts)
+    return ts</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongSurfaceField"><code class="flex name class">
+<span>class <span class="ident">SvBendAlongSurfaceField</span></span>
+<span>(</span><span>surface, axis, autoscale=False, flip=False, only_2D=False, legacy_version=0)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SvBendAlongSurfaceField(SvVectorField):
+    def __init__(self, surface, axis, autoscale=False, flip=False, only_2D=False, legacy_version=0):
+        self.surface = surface
+        self.orient_axis = axis
+        self.autoscale = autoscale
+        self.flip = flip
+        self.u_bounds = (0, 1)
+        self.v_bounds = (0, 1)
+        self.only_2D = only_2D
+        self.__description__ = &#34;Bend along {}&#34;.format(surface)
+        self.legacy_version = legacy_version
+
+    def get_other_axes(self):
+        # Select U and V to be two axes except orient_axis
+        if self.orient_axis == 0:
+            u_index, v_index = 1,2
+        elif self.orient_axis == 1:
+            u_index, v_index = 2,0
+        else:
+            if self.legacy_version==1:
+                u_index, v_index = 1,0
+            else:
+                u_index, v_index = 0,1
+        return u_index, v_index
+
+    def get_uv(self, vertices):
+        &#34;&#34;&#34;
+        Translate source vertices to UV space of future spline.
+        vertices must be np.array of shape (n, 3).
+        &#34;&#34;&#34;
+        u_index, v_index = self.get_other_axes()
+
+        # Rescale U and V coordinates to [0, 1], drop third coordinate
+        us = vertices[:,u_index].flatten()
+        vs = vertices[:,v_index].flatten()
+        min_u, max_u = self.u_bounds
+        min_v, max_v = self.v_bounds
+        size_u = max_u - min_u
+        size_v = max_v - min_v
+
+        if size_u &lt; 0.00001:
+            raise Exception(&#34;Object has too small size in U direction&#34;)
+        if size_v &lt; 0.00001:
+            raise Exception(&#34;Object has too small size in V direction&#34;)
+
+        us = self.surface.u_size * (us - min_u) / size_u + self.surface.get_u_min()
+        vs = self.surface.v_size * (vs - min_v) / size_v + self.surface.get_v_min()
+
+        return size_u, size_v, us, vs
+
+    def _evaluate(self, vertices):
+        src_size_u, src_size_v, us, vs = self.get_uv(vertices)
+        if self.autoscale:
+            u_index, v_index = self.get_other_axes()
+            scale_u = src_size_u / self.surface.u_size
+            scale_v = src_size_v / self.surface.v_size
+            scale_z = sqrt(scale_u * scale_v)
+        else:
+            if self.orient_axis == 2:
+                scale_z = -1.0
+            else:
+                scale_z = 1.0
+        if self.flip:
+            scale_z = - scale_z
+
+        if self.only_2D:
+            return self.surface.evaluate_array(us, vs)
+
+        spline_normals, surf_vertices = self.surface.normal_vertices_array(us, vs)
+        spline_normals /= np.linalg.norm(spline_normals, axis=1, keepdims=True)
+        zs = vertices[:,self.orient_axis].flatten()
+        zs = zs[np.newaxis].T
+        v1 = zs * spline_normals
+        v2 = scale_z * v1
+        new_vertices = surf_vertices + v2
+        return new_vertices
+
+    def evaluate_grid(self, xs, ys, zs):
+        vertices = np.stack((xs, ys, zs)).T
+        new_vertices = self._evaluate(vertices)
+        R = (new_vertices - vertices).T
+        return R[0], R[1], R[2]
+
+    def evaluate(self, x, y, z):
+        xs, ys, zs = self.evaluate_grid(np.array([x]), np.array([y]), np.array([z]))
+        return np.array([xs[0], ys[0], zs[0]])</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sverchok.utils.field.vector.SvVectorField" href="#sverchok.utils.field.vector.SvVectorField">SvVectorField</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sverchok.utils.field.vector.SvBendAlongSurfaceField.evaluate"><code class="name flex">
+<span>def <span class="ident">evaluate</span></span>(<span>self, x, y, z)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate(self, x, y, z):
+    xs, ys, zs = self.evaluate_grid(np.array([x]), np.array([y]), np.array([z]))
+    return np.array([xs[0], ys[0], zs[0]])</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongSurfaceField.evaluate_grid"><code class="name flex">
+<span>def <span class="ident">evaluate_grid</span></span>(<span>self, xs, ys, zs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_grid(self, xs, ys, zs):
+    vertices = np.stack((xs, ys, zs)).T
+    new_vertices = self._evaluate(vertices)
+    R = (new_vertices - vertices).T
+    return R[0], R[1], R[2]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongSurfaceField.get_other_axes"><code class="name flex">
+<span>def <span class="ident">get_other_axes</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_other_axes(self):
+    # Select U and V to be two axes except orient_axis
+    if self.orient_axis == 0:
+        u_index, v_index = 1,2
+    elif self.orient_axis == 1:
+        u_index, v_index = 2,0
+    else:
+        if self.legacy_version==1:
+            u_index, v_index = 1,0
+        else:
+            u_index, v_index = 0,1
+    return u_index, v_index</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvBendAlongSurfaceField.get_uv"><code class="name flex">
+<span>def <span class="ident">get_uv</span></span>(<span>self, vertices)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_uv(self, vertices):
+    &#34;&#34;&#34;
+    Translate source vertices to UV space of future spline.
+    vertices must be np.array of shape (n, 3).
+    &#34;&#34;&#34;
+    u_index, v_index = self.get_other_axes()
+
+    # Rescale U and V coordinates to [0, 1], drop third coordinate
+    us = vertices[:,u_index].flatten()
+    vs = vertices[:,v_index].flatten()
+    min_u, max_u = self.u_bounds
+    min_v, max_v = self.v_bounds
+    size_u = max_u - min_u
+    size_v = max_v - min_v
+
+    if size_u &lt; 0.00001:
+        raise Exception(&#34;Object has too small size in U direction&#34;)
+    if size_v &lt; 0.00001:
+        raise Exception(&#34;Object has too small size in V direction&#34;)
+
+    us = self.surface.u_size * (us - min_u) / size_u + self.surface.get_u_min()
+    vs = self.surface.v_size * (vs - min_v) / size_v + self.surface.get_v_min()
+
+    return size_u, size_v, us, vs</code></pre>
+</details>
+<div class="desc"><p>Translate source vertices to UV space of future spline.
+vertices must be np.array of shape (n, 3).</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="sverchok.utils.field.vector.SvConstantVectorField"><code class="flex name class">
+<span>class <span class="ident">SvConstantVectorField</span></span>
+<span>(</span><span>vector)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SvConstantVectorField(SvVectorField):
+
+    def __init__(self, vector):
+        self.vector = np.array(vector)
+        self.__description__ = &#34;Constant = {}&#34;.format(vector)
+
+    def evaluate(self, x, y, z):
+        return self.vector
+
+    def evaluate_grid(self, xs, ys, zs):
+        x, y, z = self.vector
+        rx = np.full_like(xs, x)
+        ry = np.full_like(ys, y)
+        rz = np.full_like(zs, z)
+        return rx, ry, rz</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sverchok.utils.field.vector.SvVectorField" href="#sverchok.utils.field.vector.SvVectorField">SvVectorField</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sverchok.utils.field.vector.SvConstantVectorField.evaluate"><code class="name flex">
+<span>def <span class="ident">evaluate</span></span>(<span>self, x, y, z)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate(self, x, y, z):
+    return self.vector</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvConstantVectorField.evaluate_grid"><code class="name flex">
+<span>def <span class="ident">evaluate_grid</span></span>(<span>self, xs, ys, zs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_grid(self, xs, ys, zs):
+    x, y, z = self.vector
+    rx = np.full_like(xs, x)
+    ry = np.full_like(ys, y)
+    rz = np.full_like(zs, z)
+    return rx, ry, rz</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="sverchok.utils.field.vector.SvMatrixVectorField"><code class="flex name class">
+<span>class <span class="ident">SvMatrixVectorField</span></span>
+<span>(</span><span>matrix)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SvMatrixVectorField(SvVectorField):
+
+    def __init__(self, matrix):
+        self.matrix = matrix
+        self.__description__ = &#34;Matrix&#34;
+
+    def evaluate(self, x, y, z):
+        v = Vector((x, y, z))
+        v = (self.matrix @ v) - v
+        return np.array(v)
+
+    def evaluate_grid(self, xs, ys, zs):
+        matrix = np.array(self.matrix.to_3x3())
+        translation = np.array(self.matrix.translation)
+        points = np.stack((xs, ys, zs)).T
+        R = np.apply_along_axis(lambda v : matrix @ v + translation - v, 1, points).T
+        return R[0], R[1], R[2]</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sverchok.utils.field.vector.SvVectorField" href="#sverchok.utils.field.vector.SvVectorField">SvVectorField</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sverchok.utils.field.vector.SvMatrixVectorField.evaluate"><code class="name flex">
+<span>def <span class="ident">evaluate</span></span>(<span>self, x, y, z)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate(self, x, y, z):
+    v = Vector((x, y, z))
+    v = (self.matrix @ v) - v
+    return np.array(v)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvMatrixVectorField.evaluate_grid"><code class="name flex">
+<span>def <span class="ident">evaluate_grid</span></span>(<span>self, xs, ys, zs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_grid(self, xs, ys, zs):
+    matrix = np.array(self.matrix.to_3x3())
+    translation = np.array(self.matrix.translation)
+    points = np.stack((xs, ys, zs)).T
+    R = np.apply_along_axis(lambda v : matrix @ v + translation - v, 1, points).T
+    return R[0], R[1], R[2]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="sverchok.utils.field.vector.SvNoiseVectorField"><code class="flex name class">
+<span>class <span class="ident">SvNoiseVectorField</span></span>
+<span>(</span><span>noise_type, seed)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SvNoiseVectorField(SvVectorField):
+    def __init__(self, noise_type, seed):
+        self.noise_type = noise_type
+        self.seed = seed
+        self.__description__ = &#34;{} noise&#34;.format(noise_type)
+
+    def evaluate(self, x, y, z):
+        noise.seed_set(self.seed)
+        v = noise.noise_vector((x, y, z), noise_basis=self.noise_type)
+        return np.array(v)
+
+    def evaluate_grid(self, xs, ys, zs):
+        noise.seed_set(self.seed)
+        def mk_noise(v):
+            r = noise.noise_vector(v, noise_basis=self.noise_type)
+            return r[0], r[1], r[2]
+        vectors = np.stack((xs,ys,zs)).T
+        return np.vectorize(mk_noise, signature=&#34;(3)-&gt;(),(),()&#34;)(vectors)</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sverchok.utils.field.vector.SvVectorField" href="#sverchok.utils.field.vector.SvVectorField">SvVectorField</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sverchok.utils.field.vector.SvNoiseVectorField.evaluate"><code class="name flex">
+<span>def <span class="ident">evaluate</span></span>(<span>self, x, y, z)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate(self, x, y, z):
+    noise.seed_set(self.seed)
+    v = noise.noise_vector((x, y, z), noise_basis=self.noise_type)
+    return np.array(v)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvNoiseVectorField.evaluate_grid"><code class="name flex">
+<span>def <span class="ident">evaluate_grid</span></span>(<span>self, xs, ys, zs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_grid(self, xs, ys, zs):
+    noise.seed_set(self.seed)
+    def mk_noise(v):
+        r = noise.noise_vector(v, noise_basis=self.noise_type)
+        return r[0], r[1], r[2]
+    vectors = np.stack((xs,ys,zs)).T
+    return np.vectorize(mk_noise, signature=&#34;(3)-&gt;(),(),()&#34;)(vectors)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="sverchok.utils.field.vector.SvRelativeVectorField"><code class="flex name class">
+<span>class <span class="ident">SvRelativeVectorField</span></span>
+<span>(</span><span>field)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SvRelativeVectorField(SvVectorField):
+    def __init__(self, field):
+        self.field = field
+        self.__description__ = &#34;Relative({})&#34;.format(field)
+
+    def evaluate(self, x, y, z):
+        r = self.field.evaluate(x, y, z)
+        return r - np.array([x, y, z])
+
+    def evaluate_grid(self, xs, ys, zs):
+        rxs, rys, rzs = self.field.evaluate_grid(xs, ys, zs)
+        return rxs - xs, rys - ys, rzs - zs</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sverchok.utils.field.vector.SvVectorField" href="#sverchok.utils.field.vector.SvVectorField">SvVectorField</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sverchok.utils.field.vector.SvRelativeVectorField.evaluate"><code class="name flex">
+<span>def <span class="ident">evaluate</span></span>(<span>self, x, y, z)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate(self, x, y, z):
+    r = self.field.evaluate(x, y, z)
+    return r - np.array([x, y, z])</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvRelativeVectorField.evaluate_grid"><code class="name flex">
+<span>def <span class="ident">evaluate_grid</span></span>(<span>self, xs, ys, zs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_grid(self, xs, ys, zs):
+    rxs, rys, rzs = self.field.evaluate_grid(xs, ys, zs)
+    return rxs - xs, rys - ys, rzs - zs</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="sverchok.utils.field.vector.SvRotationVectorField"><code class="flex name class">
+<span>class <span class="ident">SvRotationVectorField</span></span>
+<span>(</span><span>center, direction, falloff=None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SvRotationVectorField(SvVectorField):
+
+    def __init__(self, center, direction, falloff=None):
+        self.center = center
+        self.direction = direction
+        self.falloff = falloff
+        self.__description__ = &#34;Rotation Field&#34;
+
+    def evaluate(self, x, y, z):
+        vertex = np.array([x,y,z])
+        direction = self.direction
+        to_center = self.center - vertex
+        projection = np.dot(to_center, direction) * direction / np.dot(direction, direction)
+        dv = np.cross(to_center - projection, direction)
+
+        if self.falloff is not None:
+            norm = np.linalg.norm(dv)
+            dv = self.falloff(norm) * dv / norm
+        return dv
+
+    def evaluate_grid(self, xs, ys, zs):
+        direction = self.direction
+        direction2 = np.dot(direction, direction)
+        points = np.stack((xs, ys, zs)).T
+        to_center = self.center[np.newaxis, :] - points
+        projection = direction[np.newaxis, :] * (np_dot(to_center, direction[np.newaxis,:]) / direction2)[:, np.newaxis]
+        vectors = np.cross(to_center - projection, direction)
+
+        if self.falloff is not None:
+            norms = np.linalg.norm(vectors, axis=1, keepdims=True)
+            nonzero = (norms &gt; 0)[:,0]
+            lens = self.falloff(norms)
+            vectors[nonzero] = vectors[nonzero] / norms[nonzero][:, 0][np.newaxis].T
+            R = (lens * vectors).T
+            return R[0], R[1], R[2]
+        else:
+            R = vectors.T
+            return R[0], R[1], R[2]</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sverchok.utils.field.vector.SvVectorField" href="#sverchok.utils.field.vector.SvVectorField">SvVectorField</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sverchok.utils.field.vector.SvRotationVectorField.evaluate"><code class="name flex">
+<span>def <span class="ident">evaluate</span></span>(<span>self, x, y, z)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate(self, x, y, z):
+    vertex = np.array([x,y,z])
+    direction = self.direction
+    to_center = self.center - vertex
+    projection = np.dot(to_center, direction) * direction / np.dot(direction, direction)
+    dv = np.cross(to_center - projection, direction)
+
+    if self.falloff is not None:
+        norm = np.linalg.norm(dv)
+        dv = self.falloff(norm) * dv / norm
+    return dv</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvRotationVectorField.evaluate_grid"><code class="name flex">
+<span>def <span class="ident">evaluate_grid</span></span>(<span>self, xs, ys, zs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_grid(self, xs, ys, zs):
+    direction = self.direction
+    direction2 = np.dot(direction, direction)
+    points = np.stack((xs, ys, zs)).T
+    to_center = self.center[np.newaxis, :] - points
+    projection = direction[np.newaxis, :] * (np_dot(to_center, direction[np.newaxis,:]) / direction2)[:, np.newaxis]
+    vectors = np.cross(to_center - projection, direction)
+
+    if self.falloff is not None:
+        norms = np.linalg.norm(vectors, axis=1, keepdims=True)
+        nonzero = (norms &gt; 0)[:,0]
+        lens = self.falloff(norms)
+        vectors[nonzero] = vectors[nonzero] / norms[nonzero][:, 0][np.newaxis].T
+        R = (lens * vectors).T
+        return R[0], R[1], R[2]
+    else:
+        R = vectors.T
+        return R[0], R[1], R[2]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="sverchok.utils.field.vector.SvScalarFieldCurveMap"><code class="flex name class">
+<span>class <span class="ident">SvScalarFieldCurveMap</span></span>
+<span>(</span><span>scalar_field, curve, mode)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SvScalarFieldCurveMap(SvVectorField):
+    def __init__(self, scalar_field, curve, mode):
+        self.scalar_field = scalar_field
+        self.curve = curve
+        self.mode = mode
+
+    def evaluate(self, x, y, z):
+        t = self.scalar_field.evaluate(x,y,z)
+        if self.mode == &#39;VALUE&#39;:
+            return self.curve.evaluate(t)
+        elif self.mode == &#39;TANGENT&#39;:
+            return self.curve.tangent(t)
+        else: # NORMAL
+            return self.curve.main_normal(t)
+
+    def evaluate_grid(self, xs, ys, zs):
+        ts = self.scalar_field.evaluate_grid(xs, ys, zs)
+        if self.mode == &#39;VALUE&#39;:
+            vectors = self.curve.evaluate_array(ts)
+        elif self.mode == &#39;TANGENT&#39;:
+            vectors = self.curve.tangent_array(ts)
+        else: # NORMAL
+            vectors = self.curve.main_normal_array(ts)
+        return vectors[:,0], vectors[:,1], vectors[:,2]</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sverchok.utils.field.vector.SvVectorField" href="#sverchok.utils.field.vector.SvVectorField">SvVectorField</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sverchok.utils.field.vector.SvScalarFieldCurveMap.evaluate"><code class="name flex">
+<span>def <span class="ident">evaluate</span></span>(<span>self, x, y, z)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate(self, x, y, z):
+    t = self.scalar_field.evaluate(x,y,z)
+    if self.mode == &#39;VALUE&#39;:
+        return self.curve.evaluate(t)
+    elif self.mode == &#39;TANGENT&#39;:
+        return self.curve.tangent(t)
+    else: # NORMAL
+        return self.curve.main_normal(t)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvScalarFieldCurveMap.evaluate_grid"><code class="name flex">
+<span>def <span class="ident">evaluate_grid</span></span>(<span>self, xs, ys, zs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_grid(self, xs, ys, zs):
+    ts = self.scalar_field.evaluate_grid(xs, ys, zs)
+    if self.mode == &#39;VALUE&#39;:
+        vectors = self.curve.evaluate_array(ts)
+    elif self.mode == &#39;TANGENT&#39;:
+        vectors = self.curve.tangent_array(ts)
+    else: # NORMAL
+        vectors = self.curve.main_normal_array(ts)
+    return vectors[:,0], vectors[:,1], vectors[:,2]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="sverchok.utils.field.vector.SvVectorField"><code class="flex name class">
+<span>class <span class="ident">SvVectorField</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SvVectorField(object):
+    def __repr__(self):
+        if hasattr(self, &#39;__description__&#39;):
+            description = self.__description__
+        else:
+            description = self.__class__.__name__
+        return &#34;&lt;{} vector field&gt;&#34;.format(description)
+
+    def evaluate(self, x, y, z):
+        rxs, rys, rzs = self.evaluate_grid([x], [y], [z])
+        return rxs[0], rys[0], rzs[0]
+
+    def evaluate_grid(self, xs, ys, zs):
+        raise NotImplementedError(&#34;not implemented&#34;)
+
+    def evaluate_array(self, points):
+        xs = points[:,0]
+        ys = points[:,1]
+        zs = points[:,2]
+        return self.evaluate_grid(xs, ys, zs)
+    
+    def to_relative(self):
+        return SvRelativeVectorField(self)
+
+    def to_absolute(self):
+        return SvAbsoluteVectorField(self)</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="sverchok.utils.field.attractor.SvBvhAttractorVectorField" href="attractor.html#sverchok.utils.field.attractor.SvBvhAttractorVectorField">SvBvhAttractorVectorField</a></li>
+<li><a title="sverchok.utils.field.attractor.SvCircleAttractorVectorField" href="attractor.html#sverchok.utils.field.attractor.SvCircleAttractorVectorField">SvCircleAttractorVectorField</a></li>
+<li><a title="sverchok.utils.field.attractor.SvEdgeAttractorVectorField" href="attractor.html#sverchok.utils.field.attractor.SvEdgeAttractorVectorField">SvEdgeAttractorVectorField</a></li>
+<li><a title="sverchok.utils.field.attractor.SvKdtVectorField" href="attractor.html#sverchok.utils.field.attractor.SvKdtVectorField">SvKdtVectorField</a></li>
+<li><a title="sverchok.utils.field.attractor.SvLineAttractorVectorField" href="attractor.html#sverchok.utils.field.attractor.SvLineAttractorVectorField">SvLineAttractorVectorField</a></li>
+<li><a title="sverchok.utils.field.attractor.SvPlaneAttractorVectorField" href="attractor.html#sverchok.utils.field.attractor.SvPlaneAttractorVectorField">SvPlaneAttractorVectorField</a></li>
+<li><a title="sverchok.utils.field.attractor.SvVectorFieldPointDistance" href="attractor.html#sverchok.utils.field.attractor.SvVectorFieldPointDistance">SvVectorFieldPointDistance</a></li>
+<li><a title="sverchok.utils.field.differential.SvScalarFieldGradient" href="differential.html#sverchok.utils.field.differential.SvScalarFieldGradient">SvScalarFieldGradient</a></li>
+<li><a title="sverchok.utils.field.differential.SvVectorFieldRotor" href="differential.html#sverchok.utils.field.differential.SvVectorFieldRotor">SvVectorFieldRotor</a></li>
+<li><a title="sverchok.utils.field.frame_along_curve.SvFrameAlongCurveField" href="frame_along_curve.html#sverchok.utils.field.frame_along_curve.SvFrameAlongCurveField">SvFrameAlongCurveField</a></li>
+<li><a title="sverchok.utils.field.image.SvImageVectorField" href="image.html#sverchok.utils.field.image.SvImageVectorField">SvImageVectorField</a></li>
+<li><a title="sverchok.utils.field.rbf.SvBvhRbfNormalVectorField" href="rbf.html#sverchok.utils.field.rbf.SvBvhRbfNormalVectorField">SvBvhRbfNormalVectorField</a></li>
+<li><a title="sverchok.utils.field.rbf.SvRbfVectorField" href="rbf.html#sverchok.utils.field.rbf.SvRbfVectorField">SvRbfVectorField</a></li>
+<li><a title="sverchok.utils.field.vector.SvAbsoluteVectorField" href="#sverchok.utils.field.vector.SvAbsoluteVectorField">SvAbsoluteVectorField</a></li>
+<li><a title="sverchok.utils.field.vector.SvBendAlongCurveField" href="#sverchok.utils.field.vector.SvBendAlongCurveField">SvBendAlongCurveField</a></li>
+<li><a title="sverchok.utils.field.vector.SvBendAlongSurfaceField" href="#sverchok.utils.field.vector.SvBendAlongSurfaceField">SvBendAlongSurfaceField</a></li>
+<li><a title="sverchok.utils.field.vector.SvConstantVectorField" href="#sverchok.utils.field.vector.SvConstantVectorField">SvConstantVectorField</a></li>
+<li><a title="sverchok.utils.field.vector.SvMatrixVectorField" href="#sverchok.utils.field.vector.SvMatrixVectorField">SvMatrixVectorField</a></li>
+<li><a title="sverchok.utils.field.vector.SvNoiseVectorField" href="#sverchok.utils.field.vector.SvNoiseVectorField">SvNoiseVectorField</a></li>
+<li><a title="sverchok.utils.field.vector.SvRelativeVectorField" href="#sverchok.utils.field.vector.SvRelativeVectorField">SvRelativeVectorField</a></li>
+<li><a title="sverchok.utils.field.vector.SvRotationVectorField" href="#sverchok.utils.field.vector.SvRotationVectorField">SvRotationVectorField</a></li>
+<li><a title="sverchok.utils.field.vector.SvScalarFieldCurveMap" href="#sverchok.utils.field.vector.SvScalarFieldCurveMap">SvScalarFieldCurveMap</a></li>
+<li><a title="sverchok.utils.field.vector.SvVectorFieldLambda" href="#sverchok.utils.field.vector.SvVectorFieldLambda">SvVectorFieldLambda</a></li>
+<li><a title="sverchok.utils.field.vector.SvVoronoiVectorField" href="#sverchok.utils.field.vector.SvVoronoiVectorField">SvVoronoiVectorField</a></li>
+<li><a title="sverchok.utils.field.vector_operations.SvAverageVectorField" href="vector_operations.html#sverchok.utils.field.vector_operations.SvAverageVectorField">SvAverageVectorField</a></li>
+<li><a title="sverchok.utils.field.vector_operations.SvComposedVectorField" href="vector_operations.html#sverchok.utils.field.vector_operations.SvComposedVectorField">SvComposedVectorField</a></li>
+<li><a title="sverchok.utils.field.vector_operations.SvPreserveCoordinateField" href="vector_operations.html#sverchok.utils.field.vector_operations.SvPreserveCoordinateField">SvPreserveCoordinateField</a></li>
+<li><a title="sverchok.utils.field.vector_operations.SvSelectVectorField" href="vector_operations.html#sverchok.utils.field.vector_operations.SvSelectVectorField">SvSelectVectorField</a></li>
+<li><a title="sverchok.utils.field.vector_operations.SvVectorFieldBinOp" href="vector_operations.html#sverchok.utils.field.vector_operations.SvVectorFieldBinOp">SvVectorFieldBinOp</a></li>
+<li><a title="sverchok.utils.field.vector_operations.SvVectorFieldCartesianFilter" href="vector_operations.html#sverchok.utils.field.vector_operations.SvVectorFieldCartesianFilter">SvVectorFieldCartesianFilter</a></li>
+<li><a title="sverchok.utils.field.vector_operations.SvVectorFieldComposition" href="vector_operations.html#sverchok.utils.field.vector_operations.SvVectorFieldComposition">SvVectorFieldComposition</a></li>
+<li><a title="sverchok.utils.field.vector_operations.SvVectorFieldCotangent" href="vector_operations.html#sverchok.utils.field.vector_operations.SvVectorFieldCotangent">SvVectorFieldCotangent</a></li>
+<li><a title="sverchok.utils.field.vector_operations.SvVectorFieldCrossProduct" href="vector_operations.html#sverchok.utils.field.vector_operations.SvVectorFieldCrossProduct">SvVectorFieldCrossProduct</a></li>
+<li><a title="sverchok.utils.field.vector_operations.SvVectorFieldCylindricalFilter" href="vector_operations.html#sverchok.utils.field.vector_operations.SvVectorFieldCylindricalFilter">SvVectorFieldCylindricalFilter</a></li>
+<li><a title="sverchok.utils.field.vector_operations.SvVectorFieldMultipliedByScalar" href="vector_operations.html#sverchok.utils.field.vector_operations.SvVectorFieldMultipliedByScalar">SvVectorFieldMultipliedByScalar</a></li>
+<li><a title="sverchok.utils.field.vector_operations.SvVectorFieldSphericalFilter" href="vector_operations.html#sverchok.utils.field.vector_operations.SvVectorFieldSphericalFilter">SvVectorFieldSphericalFilter</a></li>
+<li><a title="sverchok.utils.field.vector_operations.SvVectorFieldTangent" href="vector_operations.html#sverchok.utils.field.vector_operations.SvVectorFieldTangent">SvVectorFieldTangent</a></li>
+<li><a title="sverchok.utils.field.vector_operations.SvVectorFieldsLerp" href="vector_operations.html#sverchok.utils.field.vector_operations.SvVectorFieldsLerp">SvVectorFieldsLerp</a></li>
+<li><a title="sverchok.utils.field.vector_primitives.SvTaperVectorField" href="vector_primitives.html#sverchok.utils.field.vector_primitives.SvTaperVectorField">SvTaperVectorField</a></li>
+<li><a title="sverchok.utils.field.vector_primitives.SvTwistVectorField" href="vector_primitives.html#sverchok.utils.field.vector_primitives.SvTwistVectorField">SvTwistVectorField</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sverchok.utils.field.vector.SvVectorField.evaluate"><code class="name flex">
+<span>def <span class="ident">evaluate</span></span>(<span>self, x, y, z)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate(self, x, y, z):
+    rxs, rys, rzs = self.evaluate_grid([x], [y], [z])
+    return rxs[0], rys[0], rzs[0]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvVectorField.evaluate_array"><code class="name flex">
+<span>def <span class="ident">evaluate_array</span></span>(<span>self, points)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_array(self, points):
+    xs = points[:,0]
+    ys = points[:,1]
+    zs = points[:,2]
+    return self.evaluate_grid(xs, ys, zs)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvVectorField.evaluate_grid"><code class="name flex">
+<span>def <span class="ident">evaluate_grid</span></span>(<span>self, xs, ys, zs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_grid(self, xs, ys, zs):
+    raise NotImplementedError(&#34;not implemented&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvVectorField.to_absolute"><code class="name flex">
+<span>def <span class="ident">to_absolute</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_absolute(self):
+    return SvAbsoluteVectorField(self)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvVectorField.to_relative"><code class="name flex">
+<span>def <span class="ident">to_relative</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_relative(self):
+    return SvRelativeVectorField(self)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="sverchok.utils.field.vector.SvVectorFieldLambda"><code class="flex name class">
+<span>class <span class="ident">SvVectorFieldLambda</span></span>
+<span>(</span><span>function, variables, in_field, function_numpy=None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SvVectorFieldLambda(SvVectorField):
+
+    __description__ = &#34;Formula&#34;
+
+    def __init__(self, function, variables, in_field, function_numpy = None):
+        self.function = function
+        self.function_numpy = function_numpy
+        self.variables = variables
+        self.in_field = in_field
+
+    def evaluate_grid(self, xs, ys, zs):
+        if self.in_field is None:
+            Vs = np.zeros(xs.shape[0])
+        else:
+            vx, vy, vz = self.in_field.evaluate_grid(xs, ys, zs)
+            Vs = np.stack((vx, vy, vz)).T
+        if self.function_numpy is None:
+            return np.vectorize(self.function,
+                        signature = &#34;(),(),(),(3)-&gt;(),(),()&#34;)(xs, ys, zs, Vs)
+        else:
+            Vs = Vs.T
+            return self.function_numpy(xs, ys, zs, Vs)
+
+    def evaluate(self, x, y, z):
+        if self.in_field is None:
+            V = None
+        else:
+            V = self.in_field.evaluate(x, y, z)
+        return np.array(self.function(x, y, z, V))</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sverchok.utils.field.vector.SvVectorField" href="#sverchok.utils.field.vector.SvVectorField">SvVectorField</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sverchok.utils.field.vector.SvVectorFieldLambda.evaluate"><code class="name flex">
+<span>def <span class="ident">evaluate</span></span>(<span>self, x, y, z)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate(self, x, y, z):
+    if self.in_field is None:
+        V = None
+    else:
+        V = self.in_field.evaluate(x, y, z)
+    return np.array(self.function(x, y, z, V))</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvVectorFieldLambda.evaluate_grid"><code class="name flex">
+<span>def <span class="ident">evaluate_grid</span></span>(<span>self, xs, ys, zs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_grid(self, xs, ys, zs):
+    if self.in_field is None:
+        Vs = np.zeros(xs.shape[0])
+    else:
+        vx, vy, vz = self.in_field.evaluate_grid(xs, ys, zs)
+        Vs = np.stack((vx, vy, vz)).T
+    if self.function_numpy is None:
+        return np.vectorize(self.function,
+                    signature = &#34;(),(),(),(3)-&gt;(),(),()&#34;)(xs, ys, zs, Vs)
+    else:
+        Vs = Vs.T
+        return self.function_numpy(xs, ys, zs, Vs)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="sverchok.utils.field.vector.SvVoronoiVectorField"><code class="flex name class">
+<span>class <span class="ident">SvVoronoiVectorField</span></span>
+<span>(</span><span>vertices=None, voronoi=None, metric='DISTANCE')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SvVoronoiVectorField(SvVectorField):
+
+    def __init__(self, vertices=None, voronoi=None, metric=&#39;DISTANCE&#39;):
+        if vertices is None and voronoi is None:
+            raise Exception(&#34;Either vertices or voronoi must be specified&#34;)
+        if voronoi is not None:
+            self.voronoi = voronoi
+        else:
+            self.voronoi = SvVoronoiFieldData(vertices, metric=metric)
+        self.__description__ = &#34;Voronoi&#34;
+
+    def evaluate(self, x, y, z):
+        r = self.voronoi.query(np.array([x,y,z]))
+        return r[1]
+
+    def evaluate_grid(self, xs, ys, zs):
+        vs = np.stack((xs,ys,zs)).T
+        r = self.voronoi.query_array(vs)
+        vs = r[1]
+        return vs[:,0], vs[:,1], vs[:,2]</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sverchok.utils.field.vector.SvVectorField" href="#sverchok.utils.field.vector.SvVectorField">SvVectorField</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sverchok.utils.field.vector.SvVoronoiVectorField.evaluate"><code class="name flex">
+<span>def <span class="ident">evaluate</span></span>(<span>self, x, y, z)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate(self, x, y, z):
+    r = self.voronoi.query(np.array([x,y,z]))
+    return r[1]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.field.vector.SvVoronoiVectorField.evaluate_grid"><code class="name flex">
+<span>def <span class="ident">evaluate_grid</span></span>(<span>self, xs, ys, zs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_grid(self, xs, ys, zs):
+    vs = np.stack((xs,ys,zs)).T
+    r = self.voronoi.query_array(vs)
+    vs = r[1]
+    return vs[:,0], vs[:,1], vs[:,2]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="sverchok.utils.field" href="index.html">sverchok.utils.field</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="sverchok.utils.field.vector.SvAbsoluteVectorField" href="#sverchok.utils.field.vector.SvAbsoluteVectorField">SvAbsoluteVectorField</a></code></h4>
+<ul class="">
+<li><code><a title="sverchok.utils.field.vector.SvAbsoluteVectorField.evaluate" href="#sverchok.utils.field.vector.SvAbsoluteVectorField.evaluate">evaluate</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvAbsoluteVectorField.evaluate_grid" href="#sverchok.utils.field.vector.SvAbsoluteVectorField.evaluate_grid">evaluate_grid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sverchok.utils.field.vector.SvBendAlongCurveField" href="#sverchok.utils.field.vector.SvBendAlongCurveField">SvBendAlongCurveField</a></code></h4>
+<ul class="two-column">
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongCurveField.DIFF" href="#sverchok.utils.field.vector.SvBendAlongCurveField.DIFF">DIFF</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongCurveField.FRENET" href="#sverchok.utils.field.vector.SvBendAlongCurveField.FRENET">FRENET</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongCurveField.HOUSEHOLDER" href="#sverchok.utils.field.vector.SvBendAlongCurveField.HOUSEHOLDER">HOUSEHOLDER</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongCurveField.TRACK" href="#sverchok.utils.field.vector.SvBendAlongCurveField.TRACK">TRACK</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongCurveField.TRACK_NORMAL" href="#sverchok.utils.field.vector.SvBendAlongCurveField.TRACK_NORMAL">TRACK_NORMAL</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongCurveField.ZERO" href="#sverchok.utils.field.vector.SvBendAlongCurveField.ZERO">ZERO</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongCurveField.evaluate" href="#sverchok.utils.field.vector.SvBendAlongCurveField.evaluate">evaluate</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongCurveField.evaluate_grid" href="#sverchok.utils.field.vector.SvBendAlongCurveField.evaluate_grid">evaluate_grid</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongCurveField.get_matrices" href="#sverchok.utils.field.vector.SvBendAlongCurveField.get_matrices">get_matrices</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongCurveField.get_matrix" href="#sverchok.utils.field.vector.SvBendAlongCurveField.get_matrix">get_matrix</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongCurveField.get_scale" href="#sverchok.utils.field.vector.SvBendAlongCurveField.get_scale">get_scale</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongCurveField.get_t_value" href="#sverchok.utils.field.vector.SvBendAlongCurveField.get_t_value">get_t_value</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongCurveField.get_t_values" href="#sverchok.utils.field.vector.SvBendAlongCurveField.get_t_values">get_t_values</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sverchok.utils.field.vector.SvBendAlongSurfaceField" href="#sverchok.utils.field.vector.SvBendAlongSurfaceField">SvBendAlongSurfaceField</a></code></h4>
+<ul class="">
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongSurfaceField.evaluate" href="#sverchok.utils.field.vector.SvBendAlongSurfaceField.evaluate">evaluate</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongSurfaceField.evaluate_grid" href="#sverchok.utils.field.vector.SvBendAlongSurfaceField.evaluate_grid">evaluate_grid</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongSurfaceField.get_other_axes" href="#sverchok.utils.field.vector.SvBendAlongSurfaceField.get_other_axes">get_other_axes</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvBendAlongSurfaceField.get_uv" href="#sverchok.utils.field.vector.SvBendAlongSurfaceField.get_uv">get_uv</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sverchok.utils.field.vector.SvConstantVectorField" href="#sverchok.utils.field.vector.SvConstantVectorField">SvConstantVectorField</a></code></h4>
+<ul class="">
+<li><code><a title="sverchok.utils.field.vector.SvConstantVectorField.evaluate" href="#sverchok.utils.field.vector.SvConstantVectorField.evaluate">evaluate</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvConstantVectorField.evaluate_grid" href="#sverchok.utils.field.vector.SvConstantVectorField.evaluate_grid">evaluate_grid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sverchok.utils.field.vector.SvMatrixVectorField" href="#sverchok.utils.field.vector.SvMatrixVectorField">SvMatrixVectorField</a></code></h4>
+<ul class="">
+<li><code><a title="sverchok.utils.field.vector.SvMatrixVectorField.evaluate" href="#sverchok.utils.field.vector.SvMatrixVectorField.evaluate">evaluate</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvMatrixVectorField.evaluate_grid" href="#sverchok.utils.field.vector.SvMatrixVectorField.evaluate_grid">evaluate_grid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sverchok.utils.field.vector.SvNoiseVectorField" href="#sverchok.utils.field.vector.SvNoiseVectorField">SvNoiseVectorField</a></code></h4>
+<ul class="">
+<li><code><a title="sverchok.utils.field.vector.SvNoiseVectorField.evaluate" href="#sverchok.utils.field.vector.SvNoiseVectorField.evaluate">evaluate</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvNoiseVectorField.evaluate_grid" href="#sverchok.utils.field.vector.SvNoiseVectorField.evaluate_grid">evaluate_grid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sverchok.utils.field.vector.SvRelativeVectorField" href="#sverchok.utils.field.vector.SvRelativeVectorField">SvRelativeVectorField</a></code></h4>
+<ul class="">
+<li><code><a title="sverchok.utils.field.vector.SvRelativeVectorField.evaluate" href="#sverchok.utils.field.vector.SvRelativeVectorField.evaluate">evaluate</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvRelativeVectorField.evaluate_grid" href="#sverchok.utils.field.vector.SvRelativeVectorField.evaluate_grid">evaluate_grid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sverchok.utils.field.vector.SvRotationVectorField" href="#sverchok.utils.field.vector.SvRotationVectorField">SvRotationVectorField</a></code></h4>
+<ul class="">
+<li><code><a title="sverchok.utils.field.vector.SvRotationVectorField.evaluate" href="#sverchok.utils.field.vector.SvRotationVectorField.evaluate">evaluate</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvRotationVectorField.evaluate_grid" href="#sverchok.utils.field.vector.SvRotationVectorField.evaluate_grid">evaluate_grid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sverchok.utils.field.vector.SvScalarFieldCurveMap" href="#sverchok.utils.field.vector.SvScalarFieldCurveMap">SvScalarFieldCurveMap</a></code></h4>
+<ul class="">
+<li><code><a title="sverchok.utils.field.vector.SvScalarFieldCurveMap.evaluate" href="#sverchok.utils.field.vector.SvScalarFieldCurveMap.evaluate">evaluate</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvScalarFieldCurveMap.evaluate_grid" href="#sverchok.utils.field.vector.SvScalarFieldCurveMap.evaluate_grid">evaluate_grid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sverchok.utils.field.vector.SvVectorField" href="#sverchok.utils.field.vector.SvVectorField">SvVectorField</a></code></h4>
+<ul class="">
+<li><code><a title="sverchok.utils.field.vector.SvVectorField.evaluate" href="#sverchok.utils.field.vector.SvVectorField.evaluate">evaluate</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvVectorField.evaluate_array" href="#sverchok.utils.field.vector.SvVectorField.evaluate_array">evaluate_array</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvVectorField.evaluate_grid" href="#sverchok.utils.field.vector.SvVectorField.evaluate_grid">evaluate_grid</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvVectorField.to_absolute" href="#sverchok.utils.field.vector.SvVectorField.to_absolute">to_absolute</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvVectorField.to_relative" href="#sverchok.utils.field.vector.SvVectorField.to_relative">to_relative</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sverchok.utils.field.vector.SvVectorFieldLambda" href="#sverchok.utils.field.vector.SvVectorFieldLambda">SvVectorFieldLambda</a></code></h4>
+<ul class="">
+<li><code><a title="sverchok.utils.field.vector.SvVectorFieldLambda.evaluate" href="#sverchok.utils.field.vector.SvVectorFieldLambda.evaluate">evaluate</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvVectorFieldLambda.evaluate_grid" href="#sverchok.utils.field.vector.SvVectorFieldLambda.evaluate_grid">evaluate_grid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sverchok.utils.field.vector.SvVoronoiVectorField" href="#sverchok.utils.field.vector.SvVoronoiVectorField">SvVoronoiVectorField</a></code></h4>
+<ul class="">
+<li><code><a title="sverchok.utils.field.vector.SvVoronoiVectorField.evaluate" href="#sverchok.utils.field.vector.SvVoronoiVectorField.evaluate">evaluate</a></code></li>
+<li><code><a title="sverchok.utils.field.vector.SvVoronoiVectorField.evaluate_grid" href="#sverchok.utils.field.vector.SvVoronoiVectorField.evaluate_grid">evaluate_grid</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>sverchok.utils.sv_idx_viewer28_draw API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>sverchok.utils.sv_idx_viewer28_draw</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="sverchok.utils.sv_idx_viewer28_draw.adjust_list"><code class="name flex">
+<span>def <span class="ident">adjust_list</span></span>(<span>in_list, x, y)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def adjust_list(in_list, x, y):
+    return [[old_x + x, old_y + y] for (old_x, old_y) in in_list]</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.sv_idx_viewer28_draw.calc_median"><code class="name flex">
+<span>def <span class="ident">calc_median</span></span>(<span>vlist)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calc_median(vlist):
+    a = Vector((0, 0, 0))
+    for v in vlist:
+        a += v
+    return a / len(vlist)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.sv_idx_viewer28_draw.draw_indices_2D_wbg"><code class="name flex">
+<span>def <span class="ident">draw_indices_2D_wbg</span></span>(<span>context, args)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def draw_indices_2D_wbg(context, args):
+
+    context = bpy.context
+    region = context.region
+    region3d = context.space_data.region_3d
+
+    geom, settings = args
+
+    vert_idx_color      = settings[&#39;numid_verts_col&#39;]
+    edge_idx_color      = settings[&#39;numid_edges_col&#39;]
+    face_idx_color      = settings[&#39;numid_faces_col&#39;]
+    vert_bg_color       = settings[&#39;bg_verts_col&#39;]
+    edge_bg_color       = settings[&#39;bg_edges_col&#39;]
+    face_bg_color       = settings[&#39;bg_faces_col&#39;]
+    display_vert_index  = settings[&#39;display_vert_index&#39;]
+    display_edge_index  = settings[&#39;display_edge_index&#39;]
+    display_face_index  = settings[&#39;display_face_index&#39;]
+    scale               = settings[&#39;scale&#39;]
+    text_mode           = settings[&#39;text_mode&#39;]
+    draw_obj_idx        = settings[&#39;draw_obj_idx&#39;]
+    draw_bg             = settings[&#39;draw_bg&#39;]
+    draw_bface          = settings[&#39;draw_bface&#39;]
+
+    font_id             = settings[&#39;font_id&#39;]
+    text_height         = int(13.0 * scale)
+    text_height_05      = int(text_height*0.5)
+    if(text_height_05&lt;2):
+        text_height_05=2
+    drawing.blf_size(font_id, text_height, 72)  # should check prefs.dpi
+
+    region_mid_width    = region.width / 2.0
+    region_mid_height   = region.height / 2.0
+
+    # vars for projection
+    perspective_matrix  = region3d.perspective_matrix.copy()
+
+    final_draw_data     = {}
+
+    object_index_index_gap=2
+    def draw_all_text_at_once(final_draw_data):
+        if draw_bg==True:
+            # build bg mesh and vcol data
+            full_bg_Verts = []
+            add_vert_list = full_bg_Verts.extend
+            
+            full_bg_colors = []
+            add_vcol = full_bg_colors.extend
+            for counter, (_, _, _, _, _, type_draw, pts) in final_draw_data.items():
+                col = settings[f&#39;bg_{type_draw}_col&#39;]
+                add_vert_list(pts)
+                add_vcol((col,) * 6)
+
+            # draw background
+            shader_name = f&#39;{&#34;2D_&#34; if bpy.app.version &lt; (3, 4) else &#34;&#34;}SMOOTH_COLOR&#39;
+            shader = gpu.shader.from_builtin(shader_name)
+            batch = batch_for_shader(shader, &#39;TRIS&#39;, {&#34;pos&#34;: full_bg_Verts, &#34;color&#34;: full_bg_colors})
+            batch.draw(shader)
+
+        # draw text 
+        for counter, (text_info, pos_x, pos_y, txt_width, txt_height, type_draw, _) in final_draw_data.items():
+            drawing.blf_size(font_id, text_height, 72)  # should check prefs.dpi
+            text_color = settings[f&#39;numid_{type_draw}_col&#39;]
+
+            blf.color(font_id, *text_color)
+            blf.position(font_id, pos_x, pos_y, 0)
+            text = str(text_info.index)
+            if text_mode in [&#39;TEXT_ONLY&#39;, &#39;TEXT_INDEX&#39;]:
+                text = str(text_info.text)
+            blf.draw(font_id, text)
+
+            txt_width, txt_height = blf.dimensions(font_id, text)
+            drawing.blf_size(font_id, text_height_05, 72)
+            object_index_width, object_index_height = blf.dimensions(font_id, str(text_info.object_index))
+            if draw_obj_idx:
+                blf.position(font_id, pos_x + txt_width+2, pos_y, 0)
+                blf.draw(font_id, str(text_info.object_index) )
+
+            if text_mode in [&#39;TEXT_INDEX&#39;]:
+                drawing.blf_size(font_id, text_height_05, 72)
+                blf.position(font_id, pos_x + txt_width+2, pos_y+object_index_height+object_index_index_gap, 0)
+                blf.draw(font_id, str(text_info.index) )
+            pass
+        return
+
+    def gather_index(text_info, type_draw):
+        # if point_on_screen( region, region3d, text_info.location)==False:
+        #     return
+        
+        vec_4d = perspective_matrix @ text_info.location.to_4d()
+        if vec_4d.w &lt;= 0.0:
+            return
+
+        x = region_mid_width + region_mid_width * (vec_4d.x / vec_4d.w)
+        y = region_mid_height + region_mid_height * (vec_4d.y / vec_4d.w)
+
+        # ---- draw text ----
+        text=str(text_info.index)
+        if text_mode in [&#39;TEXT_ONLY&#39;, &#39;TEXT_INDEX&#39;]:
+            text=str(text_info.text)
+
+        drawing.blf_size(font_id, text_height, 72)
+        txt_width, txt_height = blf.dimensions(font_id, text)
+        pos_x = x - (txt_width / 2)
+        pos_y = y - (txt_height / 2)
+
+        drawing.blf_size(font_id, text_height_05, 72)
+        object_index_width, object_index_height = blf.dimensions(font_id, str(text_info.object_index))
+        text_index_width, text_index_height = blf.dimensions(font_id, str(text_info.index))
+        txt_extra_width, txt_extra_height = 0,0
+        if draw_obj_idx and text_mode in [&#39;TEXT_INDEX&#39;]:
+            txt_extra_width  = max(object_index_width , text_index_width)
+            txt_extra_height = object_index_height + text_index_height + object_index_index_gap
+        elif draw_obj_idx:
+            txt_extra_width  = object_index_width
+            txt_extra_height = object_index_height + text_index_height + object_index_index_gap
+        elif text_mode in [&#39;TEXT_INDEX&#39;]:
+            txt_extra_width  = text_index_width
+            txt_extra_height = object_index_height + text_index_height + object_index_index_gap
+            
+        txt_width+=txt_extra_width+2
+        txt_height = max(txt_height, txt_extra_height)
+        pts = generate_points_tris(txt_width, txt_height, pos_x, pos_y)
+        data_index_counter = len(final_draw_data)
+        final_draw_data[data_index_counter] = (text_info, pos_x, pos_y, txt_width, txt_height, type_draw, pts)
+        return
+
+    # THIS SECTION IS ONLY EXECUTED IF BOTH FORWARD AND BACKFACING ARE DRAWN
+
+    if draw_bface or not geom.faces:
+
+        if display_vert_index:
+            for vert_data in geom.vert_data:
+                for vidx in vert_data:
+                    if point_on_screen( region, region3d, vidx.location):
+                        gather_index(vidx, &#39;verts&#39;)
+                pass
+            pass
+    
+        if display_edge_index:
+            for edge_data in geom.edge_data:
+                for eidx in edge_data:
+                    if point_on_screen( region, region3d, eidx.location):
+                        gather_index(eidx, &#39;edges&#39;)
+                pass
+            pass
+
+        if display_face_index:
+            for face_data in geom.face_data:
+                for fidx in face_data:
+                    if point_on_screen( region, region3d, fidx.location):
+                        gather_index(fidx, &#39;faces&#39;)
+                pass
+            pass
+
+        draw_all_text_at_once(final_draw_data)
+        # if drawing all geometry, we end early.
+        return
+
+    # THIS SECTION IS ONLY EXECUTED IF ONLY FORWARD FACING  / NON OCCLUDED FACES ARE GOING TO BE DRAWN.
+
+    eye = Vector(region3d.view_matrix[2][:3])
+    eye.length = region3d.view_distance
+    eye_location = region3d.view_location + eye  
+
+    try:
+        eps=1e-5
+        for obj_index, vert_data in enumerate(geom.vert_data):
+            polygons = geom.faces[obj_index]
+            edges = geom.edges[obj_index] if obj_index &lt; len(geom.edges) else []
+            vertices = geom.verts[obj_index]
+            bvh = BVHTree.FromPolygons(vertices, polygons, all_triangles=False, epsilon=0.0)
+
+            if display_face_index:
+                for idx, polygon in enumerate(polygons):
+                    world_coordinate = geom.face_data[obj_index][idx].location
+                    if point_on_screen( region, region3d, world_coordinate)==False:
+                        continue
+
+                    result_vector = eye_location - world_coordinate
+                    # cast ray from eye towards the median of the polygon, the reycast will return (almost definitely..)
+                    # but if the return idx does not correspond with the polygon index, then it is occluded :)
+
+                    # bvh.ray_cast(origin, direction, distance=sys.float_info.max) : returns
+                    # if hit: (Vector location, Vector normal, int index, float distance) else all (None, ...)
+
+                    direction = world_coordinate - eye_location
+                    direction.normalize()
+                    hit = bvh.ray_cast(eye_location, direction)
+                    if hit:
+                        hit_co, hit_no, hit_index, hit_dist = hit
+                        if hit_index == idx:
+                            gather_index(geom.face_data[obj_index][idx], &#39;faces&#39;)
+                        pass
+                    pass
+                pass
+            
+            if display_edge_index:
+                for idx, edge in enumerate(edges):
+                    world_coordinate = geom.edge_data[obj_index][idx].location
+                    if point_on_screen( region, region3d, world_coordinate)==False:
+                        continue
+                    result_vector = eye_location - world_coordinate
+                    dist = result_vector.length
+                    if dist==0:
+                        continue
+                    
+                    # cast ray from eye towards the median of the edge, the reycast will return (almost definitely..)
+
+                    direction = world_coordinate - eye_location
+                    direction.normalize()
+                    hit = bvh.ray_cast(eye_location, direction)
+                    if hit:
+                        hit_co, hit_no, hit_index, hit_dist = hit
+                        if hit_co is None or (hit_dist&gt;=dist - eps):
+                            gather_index(geom.edge_data[obj_index][idx], &#39;edges&#39;)
+                        pass
+                    pass
+                pass
+            
+            if display_vert_index:
+                for idx, vert in enumerate(vertices):
+                    world_coordinate = geom.vert_data[obj_index][idx].location
+                    if point_on_screen( region, region3d, world_coordinate)==False:
+                        continue
+                    result_vector = eye_location - world_coordinate
+                    dist = result_vector.length
+                    if dist==0:
+                        continue
+                    
+                    # cast ray from eye towards the vert, the reycast will return (almost definitely..)
+                    direction = world_coordinate - eye_location
+                    direction.normalize()
+                    hit = bvh.ray_cast(eye_location, direction)
+                    if hit:
+                        hit_co, hit_no, hit_index, hit_dist = hit
+                        if hit_co is None or (hit_dist&gt;=dist - eps):
+                            gather_index(geom.vert_data[obj_index][idx], &#39;verts&#39;)
+                        pass
+                    pass
+                pass
+            pass
+
+        draw_all_text_at_once(final_draw_data)
+
+    except Exception as err:
+        print(&#39;---- ERROR in sv_idx_viewer28 Occlusion backface drawing ----&#39;)
+        print(err)
+        print(traceback.format_exc())</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.sv_idx_viewer28_draw.generate_points_tris"><code class="name flex">
+<span>def <span class="ident">generate_points_tris</span></span>(<span>width, height, x, y)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_points_tris(width, height, x, y):
+    #amp = 5  # radius filletdraw_obj_idx
+    # _width += 2
+    # _height += 4
+    # _width = ((_width/2) - amp) + 2
+    # _height -= (2*amp)
+
+    # _height += 4
+    # _width += 3    
+
+    border=4 # even size
+    border2=border/2
+    _width = width
+    _height = height
+    _y = y
+    _x = x
+
+    final_list = [
+        # a
+        [        _x-border2, +_height+_y+border2],   # A         D - - - - - E
+        [+_width+_x+border2,          _y-border2],   # B         A .         |
+        [        _x-border2,          _y-border2],   # C         |   .    b  |
+        # b                                                      |     .     |
+        [        _x-border2, +_height+_y+border2],   # D         |   a   .   |
+        [+_width+_x+border2, +_height+_y+border2],   # E         |         . F
+        [+_width+_x+border2,          _y-border2]    # F         C - - - - - B
+    ] 
+    return final_list</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.sv_idx_viewer28_draw.point_on_screen"><code class="name flex">
+<span>def <span class="ident">point_on_screen</span></span>(<span>region, rv3d, point_world)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def point_on_screen(region, rv3d, point_world):
+    p = view3d_utils.location_3d_to_region_2d(region, rv3d, point_world)
+    if p is None:
+        return False
+    if 0 &lt;= p.x &lt;= region.width and 0 &lt;= p.y &lt;= region.height:
+        return True
+    return False</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="sverchok.utils.sv_idx_viewer28_draw.TextInfo"><code class="flex name class">
+<span>class <span class="ident">TextInfo</span></span>
+<span>(</span><span>_text, _object_index, _index, _location)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TextInfo:
+    def __init__(self, _text, _object_index, _index, _location):
+        self.text=_text
+        self.object_index = _object_index
+        self.index = _index  # index vert, edge or face
+        self.location = _location</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="sverchok.utils" href="index.html">sverchok.utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="sverchok.utils.sv_idx_viewer28_draw.adjust_list" href="#sverchok.utils.sv_idx_viewer28_draw.adjust_list">adjust_list</a></code></li>
+<li><code><a title="sverchok.utils.sv_idx_viewer28_draw.calc_median" href="#sverchok.utils.sv_idx_viewer28_draw.calc_median">calc_median</a></code></li>
+<li><code><a title="sverchok.utils.sv_idx_viewer28_draw.draw_indices_2D_wbg" href="#sverchok.utils.sv_idx_viewer28_draw.draw_indices_2D_wbg">draw_indices_2D_wbg</a></code></li>
+<li><code><a title="sverchok.utils.sv_idx_viewer28_draw.generate_points_tris" href="#sverchok.utils.sv_idx_viewer28_draw.generate_points_tris">generate_points_tris</a></code></li>
+<li><code><a title="sverchok.utils.sv_idx_viewer28_draw.point_on_screen" href="#sverchok.utils.sv_idx_viewer28_draw.point_on_screen">point_on_screen</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="sverchok.utils.sv_idx_viewer28_draw.TextInfo" href="#sverchok.utils.sv_idx_viewer28_draw.TextInfo">TextInfo</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

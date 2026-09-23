@@ -1,0 +1,1379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>sverchok.utils.curve.nurbs_algorithms API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>sverchok.utils.curve.nurbs_algorithms</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="sverchok.utils.curve.nurbs_algorithms.cast_nurbs_curve"><code class="name flex">
+<span>def <span class="ident">cast_nurbs_curve</span></span>(<span>curve, target, coeff=1.0)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cast_nurbs_curve(curve, target, coeff=1.0):
+    if not hasattr(target, &#34;projection_of_points&#34;):
+        raise TypeError(&#34;Target object does not support projection_of_points method&#34;)
+
+    cpts = curve.get_control_points()
+    target_cpts = target.projection_of_points(cpts)
+
+    result_cpts = (1 - coeff) * cpts + coeff * target_cpts
+
+    return curve.copy(control_points=result_cpts)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.concatenate_nurbs_curves"><code class="name flex">
+<span>def <span class="ident">concatenate_nurbs_curves</span></span>(<span>curves, tolerance=1e-06)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def concatenate_nurbs_curves(curves, tolerance=1e-6):
+    if not curves:
+        raise Exception(&#34;List of curves must be not empty&#34;)
+    curves = unify_curves_degree(curves)
+    result = curves[0]
+    for i, curve in enumerate(curves[1:]):
+        try:
+            result = result.concatenate(curve, tolerance=tolerance)
+        except Exception as e:
+            raise Exception(f&#34;Can&#39;t append curve #{i + 1}: {e}&#34;)
+    return result</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.cut_closed_segments"><code class="name flex">
+<span>def <span class="ident">cut_closed_segments</span></span>(<span>segments, tolerance=1e-06)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cut_closed_segments(segments, tolerance=1e-6):
+    unclosed = []
+    for segment in segments:
+        if segment.is_closed(tolerance=tolerance):
+            u1, u2 = segment.get_u_bounds()
+            mid = (u1 + u2) * 0.5
+            unclosed.extend(segment.split_at(mid))
+        else:
+            unclosed.append(segment)
+    return unclosed</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.interpolate_nurbs_curve"><code class="name flex">
+<span>def <span class="ident">interpolate_nurbs_curve</span></span>(<span>cls, degree, points, metric='DISTANCE', tknots=None, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def interpolate_nurbs_curve(
+    cls, degree, points, metric=&#34;DISTANCE&#34;, tknots=None, **kwargs
+):
+    return SvNurbsMaths.interpolate_curve(
+        cls, degree, points, metric=metric, tknots=tknots, **kwargs
+    )</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.intersect_nurbs_curves"><code class="name flex">
+<span>def <span class="ident">intersect_nurbs_curves</span></span>(<span>curve1,<br>curve2,<br>method='SLSQP',<br>numeric_method_threshold=0.02,<br>numeric_precision=0.001,<br>logger=None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def intersect_nurbs_curves(
+    curve1,
+    curve2,
+    method=&#34;SLSQP&#34;,
+    numeric_method_threshold=0.02,
+    numeric_precision=0.001,
+    logger=None,
+):
+    if logger is None:
+        logger = get_logger()
+    segments1 = curve1.to_bezier_segments(to_bezier_class=False)
+    segments2 = curve2.to_bezier_segments(to_bezier_class=False)
+    segments1 = cut_closed_segments(segments1, tolerance=numeric_precision)
+    segments2 = cut_closed_segments(segments2, tolerance=numeric_precision)
+    return _intersect_each_pair(
+        segments1,
+        segments2,
+        method=method,
+        numeric_method_threshold=numeric_method_threshold,
+        numeric_precision=numeric_precision,
+        logger=logger,
+    )</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_adjusting_one_weight"><code class="name flex">
+<span>def <span class="ident">move_curve_point_by_adjusting_one_weight</span></span>(<span>curve, u_bar, k, distance)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def move_curve_point_by_adjusting_one_weight(curve, u_bar, k, distance):
+    &#34;&#34;&#34;
+    Adjust the given curve so that curve&#39;s point at parameter u_bar is moved
+    by given distance towards (or away from) k&#39;th control point.
+
+    See The NURBS Book, 2nd ed, p.11.3.1.
+
+    Parameters:
+    * curve - the curve to be adjusted
+    * u_bar - curve&#39;s parameter, point at which is to be moved
+    * k - index of curve&#39;s weight, which is to be changed
+    * distance - the distance to move the point by. If &gt; 0,
+        then the point is moved towards the corresponding control point;
+        otherwise, the point is moved away from it.
+    &#34;&#34;&#34;
+    p = curve.get_degree()
+    weights = curve.get_weights().copy()
+    pt = curve.evaluate(u_bar)
+    pk = curve.get_control_points()[k]
+    pkpt = np.linalg.norm(pt - pk)
+    functions = SvNurbsBasisFunctions(curve.get_knotvector())
+    r = functions.fraction(k, p, weights)(np.array([u_bar]))[0]
+    denominator = r * (pkpt - distance)
+    coeff = 1 + distance / denominator
+    target_w = weights[k] * coeff
+    weights[k] = target_w
+    return curve.copy(weights=weights)</code></pre>
+</details>
+<div class="desc"><p>Adjust the given curve so that curve's point at parameter u_bar is moved
+by given distance towards (or away from) k'th control point.</p>
+<p>See The NURBS Book, 2nd ed, p.11.3.1.</p>
+<p>Parameters:
+* curve - the curve to be adjusted
+* u_bar - curve's parameter, point at which is to be moved
+* k - index of curve's weight, which is to be changed
+* distance - the distance to move the point by. If &gt; 0,
+then the point is moved towards the corresponding control point;
+otherwise, the point is moved away from it.</p></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_adjusting_two_weights"><code class="name flex">
+<span>def <span class="ident">move_curve_point_by_adjusting_two_weights</span></span>(<span>curve, u_bar, k, distance=None, scale=None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def move_curve_point_by_adjusting_two_weights(
+    curve, u_bar, k, distance=None, scale=None
+):
+    &#34;&#34;&#34;
+    Adjust the given curve so that curve&#39;s point at parameter u_bar is moved towards
+    (or away from) curve&#39;s control polygon leg P[k] - P[k+1].
+    If distance is specified, then the point is moved by given distance. Distance &gt; 0
+    indicates movement towards curve&#39;s control polygon leg. Note that if you try to
+    move the point farther than curve&#39;s control polygon leg, this method will produce
+    some fancy curve.
+    If scale is specified, then the distance will be calculated automatically, so that:
+    * scale = 0 means do not move anything;
+    * scale = 1.0 means move the point all the way to control polygon leg, making a small
+        fragment of the curve a straight line;
+    * scale = -1.0 means move the point all the way from control polygon leg, making a larger
+        fragment of the curve a straight line.
+    Of distance and scale, exactly one parameter must be provided.
+
+    See The NURBS Book, 2nd ed., p.11.3.2.
+    &#34;&#34;&#34;
+
+    if distance is None and scale is None:
+        raise Exception(&#34;Either distance or scale must be specified&#34;)
+    if distance is not None and scale is not None:
+        raise Exception(&#34;Of distance and scale, only one parameter must be specified&#34;)
+
+    p = curve.get_degree()
+    cpts = curve.get_control_points()
+    weights = curve.get_weights().copy()
+
+    weights0 = weights.copy()
+    weights0[k] = weights0[k + 1] = 0.0
+    R = curve.copy(weights=weights0).evaluate(u_bar)
+
+    pk = cpts[k]
+    pk1 = cpts[k + 1]
+    control_leg = LineEquation.from_two_points(pk, pk1)
+    control_leg_len = np.linalg.norm(pk1 - pk)
+
+    P = curve.evaluate(u_bar)
+
+    direction = LineEquation.from_two_points(R, P)
+    Q = direction.intersect_with_line_coplanar(control_leg)
+    Q = np.asarray(Q)
+
+    pkQ = Q - pk
+    pk1Q = Q - pk1
+
+    RQ = np.linalg.norm(Q - R)
+    RP = np.linalg.norm(P - R)
+
+    direction = (P - R) / RP
+
+    if distance is None:
+        if scale &gt;= 0:
+            distance = scale * np.linalg.norm(Q - P)
+        else:
+            distance = scale * np.linalg.norm(R - P)
+
+    target_pt = P + distance * direction
+    Rtarget = RP + distance
+
+    qRP = RP / RQ
+    qRtarget = Rtarget / RQ
+
+    A = pk + qRP * pkQ
+    B = pk1 + qRP * pk1Q
+    C = pk + qRtarget * pkQ
+    D = pk1 + qRtarget * pk1Q
+
+    ak = np.linalg.norm(B - pk1) / control_leg_len
+    ak1 = np.linalg.norm(A - pk) / control_leg_len
+    abk = np.linalg.norm(D - pk1) / control_leg_len
+    abk1 = np.linalg.norm(C - pk) / control_leg_len
+
+    eps = 1e-6
+    if abs(ak) &lt; eps or abs(abk) &lt; eps or abs(ak1) &lt; eps or abs(abk1) &lt; eps:
+        raise Exception(
+            f&#34;Specified control point #{k} is too far from curve parameter U = {u_bar}&#34;
+        )
+
+    numerator = 1.0 - ak - ak1
+    numerator_brave = 1.0 - abk - abk1
+
+    beta_k = (numerator / ak) / (numerator_brave / abk)
+    beta_k1 = (numerator / ak1) / (numerator_brave / abk1)
+
+    weights[k] = beta_k * weights[k]
+    weights[k + 1] = beta_k1 * weights[k + 1]
+
+    new_curve = curve.copy(weights=weights)
+    return new_curve</code></pre>
+</details>
+<div class="desc"><p>Adjust the given curve so that curve's point at parameter u_bar is moved towards
+(or away from) curve's control polygon leg P[k] - P[k+1].
+If distance is specified, then the point is moved by given distance. Distance &gt; 0
+indicates movement towards curve's control polygon leg. Note that if you try to
+move the point farther than curve's control polygon leg, this method will produce
+some fancy curve.
+If scale is specified, then the distance will be calculated automatically, so that:
+* scale = 0 means do not move anything;
+* scale = 1.0 means move the point all the way to control polygon leg, making a small
+fragment of the curve a straight line;
+* scale = -1.0 means move the point all the way from control polygon leg, making a larger
+fragment of the curve a straight line.
+Of distance and scale, exactly one parameter must be provided.</p>
+<p>See The NURBS Book, 2nd ed., p.11.3.2.</p></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_inserting_knot"><code class="name flex">
+<span>def <span class="ident">move_curve_point_by_inserting_knot</span></span>(<span>curve, u_bar, vector, relative=True)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def move_curve_point_by_inserting_knot(curve, u_bar, vector, relative=True):
+    &#34;&#34;&#34;
+    Adjust the given curve so that at parameter u_bar it goues through
+    the point C[u_bar] + vector instead of C[u_bar].
+    The adjustment is made by inserting additional knot at u_bar, and
+    then moving two control points.
+
+    Parameters:
+    * curve - NURBS curve to be adjusted.
+    * u_bar - curve&#39;s parameter, indicating the point you want to move
+    * vector - the vector indicating the direction and distance for which
+        you want the point to be moved
+    &#34;&#34;&#34;
+    pt0 = curve.evaluate(u_bar)
+    if not relative:
+        vector = vector - pt0
+    p = curve.get_degree()
+    curve2 = curve.insert_knot(u_bar, p - 1, if_possible=True)
+    cpts = curve2.get_control_points().copy()
+    n = len(cpts)
+    k = np.linalg.norm(cpts - pt0, axis=1).argmin()
+    cpts[k] += vector
+    if k &gt;= 1:
+        cpts[k - 1] += vector
+    if k &lt; n - 1:
+        cpts[k + 1] += vector
+    return curve2.copy(control_points=cpts)</code></pre>
+</details>
+<div class="desc"><p>Adjust the given curve so that at parameter u_bar it goues through
+the point C[u_bar] + vector instead of C[u_bar].
+The adjustment is made by inserting additional knot at u_bar, and
+then moving two control points.</p>
+<p>Parameters:
+* curve - NURBS curve to be adjusted.
+* u_bar - curve's parameter, indicating the point you want to move
+* vector - the vector indicating the direction and distance for which
+you want the point to be moved</p></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_moving_control_point"><code class="name flex">
+<span>def <span class="ident">move_curve_point_by_moving_control_point</span></span>(<span>curve, u_bar, k, vector, relative=True)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def move_curve_point_by_moving_control_point(curve, u_bar, k, vector, relative=True):
+    &#34;&#34;&#34;
+    Adjust the given curve so that at parameter u_bar it goes through
+    the point C[u_bar] + vector instead of C[u_bar].
+    The adjustment is done by moving one control point and not modifying
+    curve weights.
+
+    See The NURBS Book, 2nd ed, p.11.2.
+
+    Parameters:
+    * curve - the curve to be adjusted
+    * u_bar - curve&#39;s parameter, indicating the point you want to move
+    * k - index of control point to be moved
+    * vector - the vector indicating the direction and distance for which
+        you want the point to be moved
+    &#34;&#34;&#34;
+    p = curve.get_degree()
+    cpts = curve.get_control_points().copy()
+    weights = curve.get_weights()
+    vector = np.array(vector)
+    if not relative:
+        src_pt = curve.evaluate(u_bar)
+        vector = vector - src_pt
+    distance = np.linalg.norm(vector)
+    vector = vector / distance
+    functions = SvNurbsBasisFunctions(curve.get_knotvector())
+    x = functions.fraction(k, p, weights)(np.array([u_bar]))[0]
+    if abs(x) &lt; 1e-6:
+        raise Exception(
+            f&#34;Specified control point #{k} is too far from curve parameter U = {u_bar}&#34;
+        )
+    alpha = distance / x
+    cpts[k] = cpts[k] + alpha * vector
+    return curve.copy(control_points=cpts)</code></pre>
+</details>
+<div class="desc"><p>Adjust the given curve so that at parameter u_bar it goes through
+the point C[u_bar] + vector instead of C[u_bar].
+The adjustment is done by moving one control point and not modifying
+curve weights.</p>
+<p>See The NURBS Book, 2nd ed, p.11.2.</p>
+<p>Parameters:
+* curve - the curve to be adjusted
+* u_bar - curve's parameter, indicating the point you want to move
+* k - index of control point to be moved
+* vector - the vector indicating the direction and distance for which
+you want the point to be moved</p></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_moving_control_points"><code class="name flex">
+<span>def <span class="ident">move_curve_point_by_moving_control_points</span></span>(<span>curve, u_bar, vector, weights_mode='NONE', tangent=None, relative=True)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def move_curve_point_by_moving_control_points(
+    curve, u_bar, vector, weights_mode=WEIGHTS_NONE, tangent=None, relative=True
+):
+    &#34;&#34;&#34;
+    Adjust the given curve so that at parameter u_bar it goues through
+    the point C[u_bar] + vector instead of C[u_bar].
+    The adjustment is done by moving several control points of the curve
+    (approximately `p` of them, where p is curve&#39;s degree). The adjustment is
+    calculated so that total movement of control points is minimal.
+    Curve&#39;s weights are not changed.
+    This method tends to create more smooth curves compared to
+    move_curve_point_by_moving_control_point, but it involves more calculations,
+    so probably it is less performant.
+
+    Parameters:
+    * curve - NURBS curve to be adjusted.
+    * u_bar - curve&#39;s parameter, indicating the point you want to move
+    * vector - the vector indicating the direction and distance for which
+        you want the point to be moved
+    * weights_mode - defines whether the method will try to keep some control points
+        in place more than other control points. With WEIGHTS_NONE, it will
+        try to keep all control points in place equally. With WEIGHTS_EUCLIDIAN,
+        it will tend to move more the points which are nearer to the new location of
+        C[u_bar].
+
+    Underlying theory:
+    Given curve&#39;s knotvector, curve weights and u_bar, we can say that C[u_bar] is some
+    linear combination of curve&#39;s control points, where coefficients of that linear
+    combination are some functions of u_bar. So, the equation
+
+        C[u_bar] = Pt0            (1)
+
+    is actually an underdetermined system of linear equations on coordinates of curve
+    control points. Similarly, if we want to find a curve C1, which is similar to C,
+    but goes through Pt1 instead of Pt0, the equation
+
+        C1[u_bar] = Pt1           (2)
+
+    is also an underdetermined system of linear equations of coordinates of curve control
+    points.
+    Now, if we substract (1) from (2), we will have a new underdetermined system of
+    linear equations on *movements* of curve control points (i.e. on how should we move
+    control points of C in order to obtain C1).
+    This underdetermined system, obviously, will have infinite number of solutions (in
+    other words, we obviously have infinite ways of moving curve control points so that
+    the new curve will go through Pt1). But, among this infinite number of solutions, let&#39;s
+    peek one which makes us move control points by the least amount. If we will understand
+    &#34;the least amount&#34; as &#34;the minimum sum of squares of movement vectors&#34;, than we will
+    see that this is a standard least squares problem. We may want to assign some weights
+    to different control points, if we want to try to move less control points, and keep
+    ones which are far from Pt1 more or less in place. In such case, we will have weighted
+    least squares problem.
+    Both weighted and unweighted least squares problems are solved by use of Moore-Penrose
+    pseudo-inverse matrix - numpy.linalg.pinv.
+    &#34;&#34;&#34;
+    ndim = 3
+    cpts = curve.get_control_points().copy()
+    curve_weights = curve.get_weights()
+    if not relative:
+        src_pt = curve.evaluate(u_bar)
+        vector = vector - src_pt
+    if weights_mode == WEIGHTS_EUCLIDIAN:
+        pt0 = curve.evaluate(u_bar)
+        pt1 = pt0 + vector
+        move_weights = [np.linalg.norm(pt1 - cpt[:3]) ** (-2) for cpt in cpts]
+    else:
+        move_weights = [1 for cpt in cpts]
+    n = len(cpts)
+    p = curve.get_degree()
+    kv = curve.get_knotvector()
+    basis = SvNurbsBasisFunctions(kv)
+    alphas = [
+        basis.fraction(k, p, curve_weights)(np.array([u_bar]))[0] for k in range(n)
+    ]
+    if tangent is None:
+        A = np.zeros((ndim, ndim * n))
+    else:
+        if tangent == TANGENT_PRESERVE:
+            tangent = curve.tangent(u_bar)
+        A = np.zeros((2 * ndim, ndim * n))
+        ns = np.array(
+            [basis.derivative(k, p, 1)(np.array([u_bar]))[0] for k in range(n)]
+        )
+        numerator = ns * curve_weights  # [np.newaxis].T
+        denominator = curve_weights.sum()
+        betas = numerator / denominator
+    for i in range(n):
+        for j in range(ndim):
+            A[j, ndim * i + j] = alphas[i] * move_weights[i]
+            if tangent is not None:
+                A[ndim + j, ndim * i + j] = betas[i] * move_weights[i]
+    A1 = np.linalg.pinv(A)
+    if tangent is None:
+        B = np.zeros((ndim, 1))
+        B[0:3, 0] = vector[np.newaxis]
+    else:
+        B = np.zeros((2 * ndim, 1))
+        B[0:3, 0] = vector[np.newaxis]
+        # B[3:6,0] = tangent[np.newaxis]
+    X = (A1 @ B).T
+    W = np.diag(move_weights)
+    d_cpts = W @ X.reshape((n, ndim))
+    cpts = cpts + d_cpts
+    return curve.copy(control_points=cpts)</code></pre>
+</details>
+<div class="desc"><p>Adjust the given curve so that at parameter u_bar it goues through
+the point C[u_bar] + vector instead of C[u_bar].
+The adjustment is done by moving several control points of the curve
+(approximately <code>p</code> of them, where p is curve's degree). The adjustment is
+calculated so that total movement of control points is minimal.
+Curve's weights are not changed.
+This method tends to create more smooth curves compared to
+move_curve_point_by_moving_control_point, but it involves more calculations,
+so probably it is less performant.</p>
+<p>Parameters:
+* curve - NURBS curve to be adjusted.
+* u_bar - curve's parameter, indicating the point you want to move
+* vector - the vector indicating the direction and distance for which
+you want the point to be moved
+* weights_mode - defines whether the method will try to keep some control points
+in place more than other control points. With WEIGHTS_NONE, it will
+try to keep all control points in place equally. With WEIGHTS_EUCLIDIAN,
+it will tend to move more the points which are nearer to the new location of
+C[u_bar].</p>
+<p>Underlying theory:
+Given curve's knotvector, curve weights and u_bar, we can say that C[u_bar] is some
+linear combination of curve's control points, where coefficients of that linear
+combination are some functions of u_bar. So, the equation</p>
+<pre><code>C[u_bar] = Pt0            (1)
+</code></pre>
+<p>is actually an underdetermined system of linear equations on coordinates of curve
+control points. Similarly, if we want to find a curve C1, which is similar to C,
+but goes through Pt1 instead of Pt0, the equation</p>
+<pre><code>C1[u_bar] = Pt1           (2)
+</code></pre>
+<p>is also an underdetermined system of linear equations of coordinates of curve control
+points.
+Now, if we substract (1) from (2), we will have a new underdetermined system of
+linear equations on <em>movements</em> of curve control points (i.e. on how should we move
+control points of C in order to obtain C1).
+This underdetermined system, obviously, will have infinite number of solutions (in
+other words, we obviously have infinite ways of moving curve control points so that
+the new curve will go through Pt1). But, among this infinite number of solutions, let's
+peek one which makes us move control points by the least amount. If we will understand
+"the least amount" as "the minimum sum of squares of movement vectors", than we will
+see that this is a standard least squares problem. We may want to assign some weights
+to different control points, if we want to try to move less control points, and keep
+ones which are far from Pt1 more or less in place. In such case, we will have weighted
+least squares problem.
+Both weighted and unweighted least squares problems are solved by use of Moore-Penrose
+pseudo-inverse matrix - numpy.linalg.pinv.</p></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.nurbs_curve_extremes"><code class="name flex">
+<span>def <span class="ident">nurbs_curve_extremes</span></span>(<span>curve, direction, sign=1, global_only=False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def nurbs_curve_extremes(curve, direction, sign=1, global_only=False):
+    if curve.is_rational():
+        raise NotImplementedError(&#34;Rational curves are not supported (yet)&#34;)
+    degree = curve.get_degree()
+    direction = np.array(direction)
+    if degree &gt; 4:
+        raise UnsupportedCurveTypeException(
+            f&#34;Curve degree of {degree} is not supported&#34;
+        )
+    t_values = set()
+    for segment in curve.to_bezier_segments(to_bezier_class=False):
+        taylor = segment.bezier_to_taylor()
+        coeffs = taylor.derivative().get_coefficients()
+        poly_coeffs = (
+            coeffs[:, 0] * direction[0]
+            + coeffs[:, 1] * direction[1]
+            + coeffs[:, 2] * direction[2]
+        )
+        t1, t2 = segment.get_u_bounds()
+        if degree == 1:
+            t_values.update([t1, t2])
+        elif degree == 2:
+            b, a = poly_coeffs
+            t = -b / a
+            if t1 &lt;= t &lt;= t2:
+                t_values.add(t)
+        elif degree == 3:
+            c, b, a = poly_coeffs
+            ts = solve_quadratic(a, b, c)
+            ts = [t for t in ts if t1 &lt;= t &lt;= t2]
+            t_values.update(ts)
+        elif degree == 4:
+            d, c, b, a = poly_coeffs
+            ts = solve_cubic(a, b, c, d)
+            ts = [t for t in ts if t1 &lt;= t &lt;= t2]
+            t_values.update(ts)
+    ts = np.array(list(sorted(t_values)))
+    second_derivs = curve.second_derivative_array(ts)
+    dots = (direction * second_derivs).sum(axis=1)
+    signs = np.sign(dots)
+    mask = -np.sign(sign) == signs
+    ts = ts[mask]
+    if global_only:
+        pts = curve.evaluate_array(ts)
+        dots = (direction * pts).sum(axis=1)
+        if sign &gt; 0:
+            idx = np.argmax(dots)
+        else:
+            idx = np.argmin(dots)
+        return np.array([ts[idx]])
+    else:
+        return ts</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.nurbs_curve_matrix"><code class="name flex">
+<span>def <span class="ident">nurbs_curve_matrix</span></span>(<span>curve)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def nurbs_curve_matrix(curve):
+    cpts = curve.get_control_points()
+
+    approx = linear_approximation(cpts)
+    plane = approx.most_similar_plane()
+    normal = plane.normal
+
+    xx = cpts[-1] - cpts[0]
+    xx /= np.linalg.norm(xx)
+
+    yy = np.cross(normal, xx)
+
+    matrix = np.stack((xx, yy, normal)).T
+    return matrix</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.nurbs_curve_to_xoy"><code class="name flex">
+<span>def <span class="ident">nurbs_curve_to_xoy</span></span>(<span>curve, target_normal=None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def nurbs_curve_to_xoy(curve, target_normal=None):
+    cpts = curve.get_control_points()
+
+    approx = linear_approximation(cpts)
+    plane = approx.most_similar_plane()
+    normal = plane.normal
+
+    if target_normal is not None:
+        a = np.dot(normal, target_normal)
+        if a &gt; 0:
+            normal = -normal
+
+    xx = cpts[-1] - cpts[0]
+    xx /= np.linalg.norm(xx)
+
+    yy = np.cross(normal, xx)
+
+    matrix = np.stack((xx, yy, normal)).T
+    matrix = np.linalg.inv(matrix)
+    center = approx.center
+    new_cpts = np.array([matrix @ (cpt - center) for cpt in cpts])
+    return curve.copy(control_points=new_cpts)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.offset_nurbs_curve"><code class="name flex">
+<span>def <span class="ident">offset_nurbs_curve</span></span>(<span>curve,<br>offset_vector,<br>plane_normal=None,<br>src_ts=None,<br>algorithm='FRENET',<br>algorithm_resolution=50)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def offset_nurbs_curve(
+    curve,
+    offset_vector,
+    plane_normal = None,
+    src_ts = None,
+    algorithm=FRENET,
+    algorithm_resolution=50
+):
+    &#34;&#34;&#34;
+    Offset a NURBS curve to obtain another NURBS curve.
+
+    The algorithm is as follows:
+    * Offset some number of points from the curve
+    * then interpolate a NURBS curve through these offsetted points
+    * remove excessive knots from the resulting curve
+
+    Parameters:
+    * curve - the curve to be offsetted
+    * offset_vector - np.array of shape (3,)
+    * src_ts - T parameters of the points to be offsetted (the more points you take,
+        the more precise the offset will be). If None, Greville nodes will be used.
+    * algorithm
+    * algorithm_resolution
+    &#34;&#34;&#34;
+    if src_ts is None:
+        src_ts = curve.calc_greville_ts()
+
+    curve_pts = curve.evaluate_array(src_ts)
+    n = len(src_ts)
+    calc = SvCurveFrameCalculator(curve, algorithm, resolution=algorithm_resolution, normal = plane_normal)
+    matrices = calc.get_matrices(src_ts)
+    offset_vectors = np.tile(offset_vector[np.newaxis].T, n)
+    offset_vectors = (matrices @ offset_vectors)[:, :, 0]
+    offset_points = curve_pts + offset_vectors
+
+    tangents = curve.tangent_array(src_ts)
+    curvatures = curve.curvature_array(src_ts)
+    normals = curve.main_normal_array(src_ts, normalize = True)
+    prod = np_dot(offset_vectors, normals)
+    offset_tangents = (1.0 - prod * curvatures)[np.newaxis].T * tangents
+
+    return SvNurbsMaths.interpolate_with_tangents(
+                curve.get_nurbs_implementation(),
+                curve.get_degree(),
+                offset_points, offset_tangents,
+                tknots = src_ts)</code></pre>
+</details>
+<div class="desc"><p>Offset a NURBS curve to obtain another NURBS curve.</p>
+<p>The algorithm is as follows:
+* Offset some number of points from the curve
+* then interpolate a NURBS curve through these offsetted points
+* remove excessive knots from the resulting curve</p>
+<p>Parameters:
+* curve - the curve to be offsetted
+* offset_vector - np.array of shape (3,)
+* src_ts - T parameters of the points to be offsetted (the more points you take,
+the more precise the offset will be). If None, Greville nodes will be used.
+* algorithm
+* algorithm_resolution</p></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.optimize_nurbs_curve_parametrization"><code class="name flex">
+<span>def <span class="ident">optimize_nurbs_curve_parametrization</span></span>(<span>curve)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def optimize_nurbs_curve_parametrization(curve):
+    src_knots = curve.get_knotvector()
+    uniq_knots = np.unique(src_knots)
+    p = curve.get_degree()
+    n_params = len(uniq_knots) - 1
+    src_weights = curve.get_weights()
+    ctr = center(curve.get_control_points())
+    src_ctrlpts = curve.get_control_points() - ctr
+    curve = curve.copy(control_points = src_ctrlpts)
+
+    def apply_transform(rhos):
+        lambdas = np.exp(rhos)
+        ctrlpts = src_ctrlpts.copy()
+        weights = src_weights.copy()
+        lambda_idx = 0
+        for knot_idx, (u1, u2) in enumerate(zip(src_knots[:-1], src_knots[1:])):
+            if u1 &lt; u2:
+                weight_idx = knot_idx - p
+                while weight_idx &lt;= knot_idx:
+                    weights[weight_idx] *= lambdas[lambda_idx]
+                    ctrlpts[weight_idx] /= lambdas[lambda_idx]
+                    weight_idx += 1
+                lambda_idx += 1
+        return ctrlpts, weights
+
+    def objective(rhos):
+        new_ctrlpts, new_weights = apply_transform(rhos)
+        tmp_curve = curve.copy(control_points = new_ctrlpts, weights = new_weights)
+        return parametrization_uniformity_knot_derivatives(tmp_curve)
+
+    rho_init = np.zeros(n_params)
+    solution = scipy.optimize.minimize(objective, rho_init, method=&#39;L-BFGS-B&#39;)
+    #options = {&#39;gtol&#39;: 1e-6, &#39;disp&#39;: True})
+    if not solution.success:
+        raise AlgorithmError(&#34;Did not converge: &#34; + solution.message)
+    optimal_rhos = solution.x
+    optimal_ctrlpts, optimal_weights = apply_transform(optimal_rhos)
+    return curve.copy(control_points = optimal_ctrlpts, weights = optimal_weights)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.parametrization_uniformity_knot_derivatives"><code class="name flex">
+<span>def <span class="ident">parametrization_uniformity_knot_derivatives</span></span>(<span>curve)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def parametrization_uniformity_knot_derivatives(curve):
+    knots = np.unique(curve.get_knotvector())
+    #knots = knots[1:-1]
+    derivatives = curve.tangent_array(knots)
+    speeds = np.linalg.norm(derivatives, axis=1)
+    mean = np.mean(speeds)
+    if abs(mean) &lt; 1e-6:
+        return float(&#39;inf&#39;)
+    return np.std(speeds) / mean</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.refine_curve"><code class="name flex">
+<span>def <span class="ident">refine_curve</span></span>(<span>curve,<br>samples,<br>t_min=None,<br>t_max=None,<br>algorithm='DISTRIBUTE',<br>refine_max=False,<br>solver=None,<br>output_new_knots=False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def refine_curve(
+    curve,
+    samples,
+    t_min=None,
+    t_max=None,
+    algorithm=REFINE_DISTRIBUTE,
+    refine_max=False,
+    solver=None,
+    output_new_knots=False,
+):
+    if refine_max:
+        degree = curve.get_degree()
+        inserts_count = degree
+    else:
+        inserts_count = 1
+
+    if t_min is None:
+        t_min = curve.get_u_bounds()[0]
+    if t_max is None:
+        t_max = curve.get_u_bounds()[1]
+
+    existing_knots = curve.get_knotvector()
+    existing_knots = np.unique(existing_knots)
+    cond = np.logical_and(existing_knots &gt;= t_min, existing_knots &lt;= t_max)
+    existing_knots = existing_knots[cond]
+
+    start_knots = existing_knots.copy()
+    if t_min not in start_knots:
+        start_knots = np.concatenate(([t_min], start_knots))
+    if t_max not in start_knots:
+        start_knots = np.concatenate((start_knots, [t_max]))
+
+    if algorithm == REFINE_TRIVIAL:
+        new_knots = np.linspace(t_min, t_max, num=samples + 1, endpoint=False)[1:]
+
+    elif algorithm == REFINE_DISTRIBUTE:
+        if solver is not None:
+            length_params = solver.calc_length_params(start_knots)
+            sizes = length_params[1:] - length_params[:-1]
+            new_knots = np.array([])
+            counts = distribute_int(samples, sizes)
+            for l1, l2, count in zip(length_params[1:], length_params[:-1], counts):
+                ls = np.linspace(l1, l2, num=count + 2, endpoint=True)[1:-1]
+                ts = solver.solve(ls)
+                new_knots = np.concatenate((new_knots, ts))
+        else:
+            sizes = start_knots[1:] - start_knots[:-1]
+            counts = distribute_int(samples, sizes)
+            new_knots = np.array([])
+            for t1, t2, count in zip(start_knots[1:], start_knots[:-1], counts):
+                ts = np.linspace(t1, t2, num=count + 2, endpoint=True)[1:-1]
+                new_knots = np.concatenate((new_knots, ts))
+
+    elif algorithm == REFINE_BISECT:
+        if solver is not None:
+
+            def iteration(knots, remaining):
+                if remaining == 0:
+                    return knots
+
+                knots_np = np.asarray(list(knots))
+                knots_np.sort()
+                length_params = solver.calc_length_params(knots_np)
+                sizes = length_params[1:] - length_params[:-1]
+                i_max = sizes.argmax()
+                half_length = 0.5 * (length_params[i_max + 1] + length_params[i_max])
+                half_t = solver.solve(np.array([half_length]))[0]
+                return iteration(knots | set([half_t]), remaining - 1)
+
+            all_knots = set(list(start_knots))
+            new_knots = np.asarray(list(iteration(all_knots, samples)))
+
+        else:
+
+            def iteration(knots, remaining):
+                if remaining == 0:
+                    return knots
+
+                knots_np = np.asarray(list(knots))
+                knots_np.sort()
+                sizes = knots_np[1:] - knots_np[:-1]
+                i_max = sizes.argmax()
+                half_t = 0.5 * (knots_np[i_max + 1] + knots_np[i_max])
+                return iteration(knots | set([half_t]), remaining - 1)
+
+            all_knots = set(list(start_knots))
+            new_knots = np.asarray(list(iteration(all_knots, samples)))
+
+    else:
+        raise Exception(&#34;Unsupported algorithm&#34;)
+
+    if t_min not in existing_knots:
+        new_knots = np.concatenate(([t_min], new_knots))
+    if t_max not in existing_knots:
+        new_knots = np.concatenate((new_knots, [t_max]))
+    new_knots = np.unique(new_knots)
+    new_knots.sort()
+    # print(&#34;New:&#34;, new_knots)
+
+    for t in new_knots:
+        if t in existing_knots:
+            continue
+        try:
+            curve = curve.insert_knot(t, count=inserts_count, if_possible=True)
+        except CantInsertKnotException:
+            continue
+
+    if output_new_knots:
+        return new_knots, curve
+    else:
+        return curve</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.remove_excessive_knots"><code class="name flex">
+<span>def <span class="ident">remove_excessive_knots</span></span>(<span>curve, tolerance=1e-06)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_excessive_knots(curve, tolerance=1e-6):
+    kv = curve.get_knotvector()
+    for u in sv_knotvector.get_internal_knots(kv):
+        curve = curve.remove_knot(u, count=&#34;ALL&#34;, if_possible=True, tolerance=tolerance)
+    return curve</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.self_intersect_nurbs_curve"><code class="name flex">
+<span>def <span class="ident">self_intersect_nurbs_curve</span></span>(<span>curve,<br>method='SLSQP',<br>numeric_method_threshold=0.02,<br>numeric_precision=0.001,<br>logger=None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def self_intersect_nurbs_curve(
+    curve,
+    method=&#34;SLSQP&#34;,
+    numeric_method_threshold=0.02,
+    numeric_precision=0.001,
+    logger=None,
+):
+    if logger is None:
+        logger = get_logger()
+
+    intersections = []
+    eps = 1e-8
+
+    def _check_segments(i, j, segment1, segment2):
+        res = _intersect_segments(
+            segment1,
+            segment2,
+            method=method,
+            numeric_method_threshold=numeric_method_threshold,
+            numeric_precision=numeric_precision,
+            logger=logger,
+        )
+        u_min, u_max = segment1.get_u_bounds()
+        v_min, v_max = segment2.get_u_bounds()
+        if j == i + 1:
+            for t1, t2, pt in res:
+                if abs(t1 - u_max) &lt; eps and abs(t2 - v_min) &lt; eps:
+                    continue
+                print(f&#34;T1 {t1}, T2 {t2}, S1 {u_min} - {u_max}, S2 {v_min} - {v_max}&#34;)
+                intersections.append((t1, t2, pt))
+        else:
+            intersections.extend(res)
+
+    segments = curve.to_bezier_segments(to_bezier_class=False)
+    if len(segments) == 1:
+        t_min, t_max = curve.get_u_bounds()
+        mid = (t_min + t_max) * 0.5
+        segments = curve.split_at(mid)
+    for i, segment1 in enumerate(segments):
+        for j, segment2 in enumerate(segments):
+            if j &lt;= i:
+                continue
+            _check_segments(i, j, segment1, segment2)
+    return intersections</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.unify_curves"><code class="name flex">
+<span>def <span class="ident">unify_curves</span></span>(<span>curves, method='UNIFY', accuracy=6)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def unify_curves(curves, method=&#34;UNIFY&#34;, accuracy=6):
+    tolerance = 10 ** (-accuracy)
+    curves = [curve.reparametrize(0.0, 1.0) for curve in curves]
+    kvs = [curve.get_knotvector() for curve in curves]
+    lens = [len(kv) for kv in kvs]
+    # if all(l == lens[0] for l in lens):
+    #     diffs = np.array([kv - kvs[0] for kv in kvs])
+    #     if abs(diffs).max() &lt; tolerance:
+    #         return curves
+
+    if method == &#34;UNIFY&#34;:
+        dst_knots = sv_knotvector.KnotvectorDict(tolerance)
+        for i, curve in enumerate(curves):
+            m = sv_knotvector.to_multiplicity(curve.get_knotvector(), tolerance=None)
+            # print(f&#34;Curve #{i}: degree={curve.get_degree()}, cpts={len(curve.get_control_points())}, {m}&#34;)
+            prev_u = None
+            for u, count in m:
+                if prev_u is not None and abs(prev_u - u) &lt; tolerance:
+                    raise CurvesUnificationException(f&#34;Knots in original curve #{i} differ less than for tolerance: {prev_u}, {u}&#34;)
+                prev_u = u
+                dst_knots.put(u, count)
+        # print(&#34;Dst&#34;, dst_knots)
+        dst_knots.calc_averages()
+
+        result = []
+        #     for i, curve1 in enumerate(curves):
+        #         for j, curve2 in enumerate(curves):
+        #             if i != j:
+        #                 curve1 = curve1.to_knotvector(curve2)
+        #         result.append(curve1)
+
+        for idx, curve in enumerate(curves):
+            kv = curve.get_knotvector().copy()
+            ms = dict(
+                sv_knotvector.to_multiplicity(kv)
+            )
+            #print(f&#34;Curve #{idx}, orig kv: {ms}&#34;)
+            updates = dst_knots.get_updates(ms.keys())
+            #print(f&#34;Curve #{idx}, updates: {updates}&#34;)
+            updated_ms = []
+            for knot_idx, (knot, multiplicity) in enumerate(ms.items()):
+                if knot_idx in updates:
+                    updated_ms.append((updates[knot_idx], multiplicity))
+                else:
+                    updated_ms.append((knot, multiplicity))
+            ms = dict(updated_ms)
+            updated_kv = sv_knotvector.from_multiplicity(updated_ms)
+            curve = curve.copy(knotvector = updated_kv)
+            insertions = dst_knots.get_insertions(ms)
+            #print(&#34;Insertions&#34;, insertions)
+            for knot, diff in insertions.items():
+                if diff &gt; 0:
+                    curve = curve.insert_knot(knot, diff)
+            #                     if u in dst_knots.skip_insertions[idx]:
+            #                         pass
+            #                         print(f&#34;C: skip insertion T = {u}&#34;)
+            #                     else:
+            #                         #kv = curve.get_knotvector()
+            #                         print(f&#34;C: Insert T = {u} x {diff}&#34;)
+            #                         curve = curve.insert_knot(u, diff)
+            result.append(curve)
+
+        return result
+
+    elif method == &#34;AVERAGE&#34;:
+        kvs = [len(curve.get_control_points()) for curve in curves]
+        max_kv, min_kv = max(kvs), min(kvs)
+        if max_kv != min_kv:
+            raise CurvesUnificationException(
+                f&#34;Knotvector averaging is not applicable: Curves have different number of control points: {kvs}&#34;
+            )
+
+        knotvectors = np.array([curve.get_knotvector() for curve in curves])
+        knotvector_u = knotvectors.mean(axis=0)
+
+        result = [curve.copy(knotvector=knotvector_u) for curve in curves]
+        return result</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.unify_degrees"><code class="name flex">
+<span>def <span class="ident">unify_degrees</span></span>(<span>curves)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@deprecated(&#34;Use sverchok.utils.curve.algorithms.unify_curves_degree&#34;)
+def unify_degrees(curves):
+    max_degree = max(curve.get_degree() for curve in curves)
+    curves = [curve.elevate_degree(target=max_degree) for curve in curves]
+    return curves</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.unify_two_curves"><code class="name flex">
+<span>def <span class="ident">unify_two_curves</span></span>(<span>curve1, curve2)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def unify_two_curves(curve1, curve2):
+    return unify_curves([curve1, curve2])
+    # curve1 = curve1.to_knotvector(curve2)
+    # curve2 = curve2.to_knotvector(curve1)
+    # return curve1, curve2</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.wrap_nurbs_curve"><code class="name flex">
+<span>def <span class="ident">wrap_nurbs_curve</span></span>(<span>curve,<br>t_min,<br>t_max,<br>refinement_samples,<br>function,<br>scale=1.0,<br>direction=None,<br>refinement_algorithm='TRIVIAL',<br>refinement_solver=None,<br>tolerance=0.0001)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wrap_nurbs_curve(
+    curve,
+    t_min,
+    t_max,
+    refinement_samples,
+    function,
+    scale=1.0,
+    direction=None,
+    refinement_algorithm=REFINE_TRIVIAL,
+    refinement_solver=None,
+    tolerance=1e-4,
+):
+    curve = refine_curve(
+        curve,
+        refinement_samples,
+        t_min=t_min,
+        t_max=t_max,
+        algorithm=refinement_algorithm,
+        solver=refinement_solver,
+    )
+    cpts = curve.get_control_points().copy()
+    greville_ts = curve.calc_greville_ts()
+    wrap_idxs = np.where(np.logical_and(greville_ts &gt;= t_min, greville_ts &lt;= t_max))
+    wrap_ts = greville_ts[wrap_idxs]
+    normalized_ts = (wrap_ts - wrap_ts[0]) / (wrap_ts[-1] - wrap_ts[0])
+    wrap_cpts = cpts[wrap_idxs]
+    if direction is None:
+        wrap_dirs = curve.main_normal_array(wrap_ts)
+    else:
+        direction = np.asarray(direction)
+        direction /= np.linalg.norm(direction)
+        wrap_dirs = direction[: np.newaxis].T
+    wrap_values = scale * function(normalized_ts)
+    # print(&#34;Wv&#34;, wrap_values)
+    wrap_vectors = wrap_dirs * wrap_values[np.newaxis].T
+    cpts[wrap_idxs] = cpts[wrap_idxs] + wrap_vectors
+    curve = curve.copy(control_points=cpts)
+    return remove_excessive_knots(curve, tolerance)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="sverchok.utils.curve.nurbs_algorithms.CurvesUnificationException"><code class="flex name class">
+<span>class <span class="ident">CurvesUnificationException</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CurvesUnificationException(Exception):
+    &#34;&#34;&#34;Raised when NURBS curve unification code can not unify curves with
+    specified tolerance.&#34;&#34;&#34;
+    __description__ = &#34;NURBS curves unification exception&#34;
+    pass</code></pre>
+</details>
+<div class="desc"><p>Raised when NURBS curve unification code can not unify curves with
+specified tolerance.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+<dt id="sverchok.utils.curve.nurbs_algorithms.SvNurbsCurveLengthSolver"><code class="flex name class">
+<span>class <span class="ident">SvNurbsCurveLengthSolver</span></span>
+<span>(</span><span>curve)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SvNurbsCurveLengthSolver(SvCurveLengthSolver):
+    def __init__(self, curve):
+        self.curve = curve
+        self._reverse_spline = None
+        self._prime_spline = None
+
+    def _calc_tknots(self, resolution, tolerance):
+        def middle(segment):
+            u1, u2 = segment.get_u_bounds()
+            u = (u1 + u2) * 0.5
+            return u
+
+        def split(segment):
+            u = middle(segment)
+            return segment.split_at(u)
+
+        def calc_tknots(segment):
+            if segment.is_line(tolerance, use_length_tolerance=True):
+                u1, u2 = segment.get_u_bounds()
+                return set([u1, u2])
+            else:
+                segment1, segment2 = split(segment)
+                knots1 = calc_tknots(segment1)
+                knots2 = calc_tknots(segment2)
+                knots = knots1.union(knots2)
+                return knots
+
+        t_min, t_max = self.curve.get_u_bounds()
+        init_knots = np.linspace(t_min, t_max, num=resolution)
+        segments = [
+            self.curve.cut_segment(u1, u2) for u1, u2 in zip(init_knots, init_knots[1:])
+        ]
+
+        all_knots = set()
+        for segment in segments:
+            knots = calc_tknots(segment)
+            all_knots = all_knots.union(knots)
+
+        return np.array(sorted(all_knots))
+
+    def prepare(self, mode, resolution=50, tolerance=1e-3):
+        if tolerance is None:
+            tolerance = 1e-3
+        tknots = self._calc_tknots(resolution, tolerance)
+        lengths = self.calc_length_segments(tknots)
+        self._length_params = np.cumsum(np.insert(lengths, 0, 0))
+        self._reverse_spline = self._make_spline(mode, tknots, self._length_params)
+        self._prime_spline = self._make_spline(mode, self._length_params, tknots)</code></pre>
+</details>
+<div class="desc"></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sverchok.utils.curve.algorithms.SvCurveLengthSolver" href="algorithms.html#sverchok.utils.curve.algorithms.SvCurveLengthSolver">SvCurveLengthSolver</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sverchok.utils.curve.nurbs_algorithms.SvNurbsCurveLengthSolver.prepare"><code class="name flex">
+<span>def <span class="ident">prepare</span></span>(<span>self, mode, resolution=50, tolerance=0.001)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def prepare(self, mode, resolution=50, tolerance=1e-3):
+    if tolerance is None:
+        tolerance = 1e-3
+    tknots = self._calc_tknots(resolution, tolerance)
+    lengths = self.calc_length_segments(tknots)
+    self._length_params = np.cumsum(np.insert(lengths, 0, 0))
+    self._reverse_spline = self._make_spline(mode, tknots, self._length_params)
+    self._prime_spline = self._make_spline(mode, self._length_params, tknots)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="sverchok.utils.curve" href="index.html">sverchok.utils.curve</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.cast_nurbs_curve" href="#sverchok.utils.curve.nurbs_algorithms.cast_nurbs_curve">cast_nurbs_curve</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.concatenate_nurbs_curves" href="#sverchok.utils.curve.nurbs_algorithms.concatenate_nurbs_curves">concatenate_nurbs_curves</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.cut_closed_segments" href="#sverchok.utils.curve.nurbs_algorithms.cut_closed_segments">cut_closed_segments</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.interpolate_nurbs_curve" href="#sverchok.utils.curve.nurbs_algorithms.interpolate_nurbs_curve">interpolate_nurbs_curve</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.intersect_nurbs_curves" href="#sverchok.utils.curve.nurbs_algorithms.intersect_nurbs_curves">intersect_nurbs_curves</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_adjusting_one_weight" href="#sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_adjusting_one_weight">move_curve_point_by_adjusting_one_weight</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_adjusting_two_weights" href="#sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_adjusting_two_weights">move_curve_point_by_adjusting_two_weights</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_inserting_knot" href="#sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_inserting_knot">move_curve_point_by_inserting_knot</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_moving_control_point" href="#sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_moving_control_point">move_curve_point_by_moving_control_point</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_moving_control_points" href="#sverchok.utils.curve.nurbs_algorithms.move_curve_point_by_moving_control_points">move_curve_point_by_moving_control_points</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.nurbs_curve_extremes" href="#sverchok.utils.curve.nurbs_algorithms.nurbs_curve_extremes">nurbs_curve_extremes</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.nurbs_curve_matrix" href="#sverchok.utils.curve.nurbs_algorithms.nurbs_curve_matrix">nurbs_curve_matrix</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.nurbs_curve_to_xoy" href="#sverchok.utils.curve.nurbs_algorithms.nurbs_curve_to_xoy">nurbs_curve_to_xoy</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.offset_nurbs_curve" href="#sverchok.utils.curve.nurbs_algorithms.offset_nurbs_curve">offset_nurbs_curve</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.optimize_nurbs_curve_parametrization" href="#sverchok.utils.curve.nurbs_algorithms.optimize_nurbs_curve_parametrization">optimize_nurbs_curve_parametrization</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.parametrization_uniformity_knot_derivatives" href="#sverchok.utils.curve.nurbs_algorithms.parametrization_uniformity_knot_derivatives">parametrization_uniformity_knot_derivatives</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.refine_curve" href="#sverchok.utils.curve.nurbs_algorithms.refine_curve">refine_curve</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.remove_excessive_knots" href="#sverchok.utils.curve.nurbs_algorithms.remove_excessive_knots">remove_excessive_knots</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.self_intersect_nurbs_curve" href="#sverchok.utils.curve.nurbs_algorithms.self_intersect_nurbs_curve">self_intersect_nurbs_curve</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.unify_curves" href="#sverchok.utils.curve.nurbs_algorithms.unify_curves">unify_curves</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.unify_degrees" href="#sverchok.utils.curve.nurbs_algorithms.unify_degrees">unify_degrees</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.unify_two_curves" href="#sverchok.utils.curve.nurbs_algorithms.unify_two_curves">unify_two_curves</a></code></li>
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.wrap_nurbs_curve" href="#sverchok.utils.curve.nurbs_algorithms.wrap_nurbs_curve">wrap_nurbs_curve</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="sverchok.utils.curve.nurbs_algorithms.CurvesUnificationException" href="#sverchok.utils.curve.nurbs_algorithms.CurvesUnificationException">CurvesUnificationException</a></code></h4>
+</li>
+<li>
+<h4><code><a title="sverchok.utils.curve.nurbs_algorithms.SvNurbsCurveLengthSolver" href="#sverchok.utils.curve.nurbs_algorithms.SvNurbsCurveLengthSolver">SvNurbsCurveLengthSolver</a></code></h4>
+<ul class="">
+<li><code><a title="sverchok.utils.curve.nurbs_algorithms.SvNurbsCurveLengthSolver.prepare" href="#sverchok.utils.curve.nurbs_algorithms.SvNurbsCurveLengthSolver.prepare">prepare</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
