@@ -17,6 +17,7 @@
 # ##### END GPL LICENSE BLOCK #####
 
 import bpy
+import numpy as np
 from bpy.props import IntProperty, FloatProperty, BoolProperty, EnumProperty
 
 from math import sqrt, sin, cos, radians
@@ -25,8 +26,6 @@ from sverchok.node_tree import SverchCustomTreeNode
 from sverchok.data_structure import updateNode, match_long_repeat
 from sverchok.ui.sv_icons import custom_icon
 from sverchok.utils.geom import circle
-from sverchok.utils.sv_mesh_utils import mesh_join
-from sverchok.utils.sv_bmesh_utils import remove_doubles
 
 grid_layout_items = [
     ("RECTANGLE", "Rectangle", "", custom_icon("SV_HEXA_GRID_RECTANGLE"), 0),
@@ -140,90 +139,175 @@ def rect_layout(settings, pol_type):
     return cols, rows, offset_y, grid_center, tile_rotated
 
 
-def generate_grid(center, layout, pol_type, settings):
-    r = settings[0]   # radius
-    a = settings[1]   # angle
 
+def generate_grid(center, layout, pol_type, settings, include_lattice=False):
+    """Generate rotated tile centers in their original column-major order.
+
+    With include_lattice=True, append integer (column, row, row-offset)
+    coordinates for topology welding. These are independent of the
+    floating-point radius and rotation.
+    """
+    r, angle = settings[:2]
     if pol_type == 'HEXAGON':
-        dx = r * 3 / 2    # distance between two consecutive points along X
-        dy = r * sqrt(3)  # distance between two consecutive points along Y
-        off_base = dy / 2
-    if pol_type == 'TRIANGLE':
         dx = r * 3 / 2
-        dy = r * sqrt(3)/2
+        dy = r * sqrt(3)
+        off_base = dy / 2
+    elif pol_type == 'TRIANGLE':
+        dx = r * 3 / 2
+        dy = r * sqrt(3) / 2
         off_base = dy
-    elif pol_type == 'SQUARE':
+    else:  # SQUARE
         dx = r * sqrt(2)
-        dy = r * sqrt(2)
+        dy = dx
         off_base = dy / 2
 
-    '''
-    cols : number of points along x
-    rows : number of points along Y for each x location
-    offset_y : offset of the points in each column
-    tile_rotated:  offset in x for each tile
-    grid_center : center of the grid
-    '''
+    if layout == 'TRIANGLE':
+        cols, rows, offset_y, grid_center, _ = triang_layout(settings, pol_type)
+    elif layout == 'HEXAGON':
+        cols, rows, offset_y, grid_center, _ = hexa_layout(settings, pol_type)
+    elif layout == 'DIAMOND':
+        cols, rows, offset_y, grid_center, _ = diamond_layout(settings, pol_type)
+    else:
+        cols, rows, offset_y, grid_center, _ = rect_layout(settings, pol_type)
 
-    if layout == "TRIANGLE":
-        cols, rows, offset_y, grid_center, tile_rotated = triang_layout(settings, pol_type)
-
-    elif layout == "HEXAGON":
-        cols, rows, offset_y, grid_center, tile_rotated = hexa_layout(settings, pol_type)
-
-    elif layout == "DIAMOND":
-        cols, rows, offset_y, grid_center, tile_rotated = diamond_layout(settings, pol_type)
-
-    elif layout == "RECTANGLE":
-        cols, rows, offset_y, grid_center, tile_rotated = rect_layout(settings, pol_type)
-
-    cx = grid_center[0] * dx if center else (-dx/2 if pol_type == 'SQUARE' else -dx*2/3)
+    cx = grid_center[0] * dx if center else (-dx / 2 if pol_type == 'SQUARE' else -dx * 2 / 3)
     cy = grid_center[1] * dy if center else 0
 
+    # Some legacy layouts generate an extra unused row count; the first
+    # 'cols' columns are the only ones included by the original loop.
+    counts = np.asarray(rows[:cols], dtype=np.int64)
+    ix = np.repeat(np.arange(cols, dtype=np.int64), counts)
+    iy = np.arange(ix.size, dtype=np.int64) - np.repeat(np.cumsum(counts) - counts, counts)
+    offsets = np.asarray(offset_y, dtype=np.int64)[ix]
+
     if pol_type == 'TRIANGLE':
-        sin_base = sin(radians(30))
-        x_offset = r * sin_base
-        grid = [(x * dx - cx - x_offset * tile_rotated[x][y], y * dy - offset_y[x] * off_base - cy, tile_rotated[x][y]) for x in range(cols) for y in range(rows[x])]
-    else:
-        grid = [(x * dx - cx, y * dy - offset_y[x] * off_base - cy, 0) for x in range(cols) for y in range(rows[x])]
-
-    angle = radians(a)
-    cosa = cos(angle)
-    sina = sin(angle)
-
-    rotated_grid = [(x * cosa - y * sina, x * sina + y * cosa, rot) for x, y, rot in grid]
-
-    return rotated_grid
-
-
-def generate_tiles(tile_settings):
-
-    radius, angle, scale, separate, grid_list, sides = tile_settings
-    vert_grid_list, edge_grid_list, poly_grid_list = [[], [], []]
-
-    local_angle = 45 if sides == 4 else 30
-
-    tile = circle(radius*scale, radians(local_angle - angle), sides, None, 'pydata')
-
-    for grid in grid_list:
-        vert_list, edge_list, poly_list = [[], [], []]
-
-        if sides == 3:
-            tiles_triangular(vert_list, edge_list, poly_list, tile, grid)
+        if layout == 'RECTANGLE':
+            rotations = (ix + iy) % 2
+        elif layout == 'TRIANGLE':
+            rotations = iy % 2
         else:
-            tiles(vert_list, edge_list, poly_list, tile, grid)
+            rotations = (iy + ix // settings[2]) % 2
+        px = ix * dx - cx - r * 0.5 * rotations
+    else:
+        rotations = np.zeros(ix.size, dtype=np.int64)
+        px = ix * dx - cx
 
-        if not separate:
-            vert_list, edge_list, poly_list = mesh_join(vert_list, edge_list, poly_list)
-            if scale == 1.0:
-                vert_list, edge_list, poly_list = remove_doubles(vert_list, [], poly_list, 0.001)
+    py = iy * dy - offsets * off_base - cy
+    theta = radians(angle)
+    cosa, sina = cos(theta), sin(theta)
+    rx = px * cosa - py * sina
+    ry = px * sina + py * cosa
+
+    if include_lattice:
+        return list(zip(rx.tolist(), ry.tolist(), rotations.tolist(),
+                        ix.tolist(), iy.tolist(), offsets.tolist()))
+    return list(zip(rx.tolist(), ry.tolist(), rotations.tolist()))
+
+
+def _joined_tiles(tile, grid, radius, scale, sides, want_verts, want_edges, want_polys):
+    """Build all faces directly; weld scale=1 tiles by exact lattice keys.
+
+    No BMesh and no distance-dependent matching. Vertices retain the first
+    corner occurrence order, and every face keeps the original tile order.
+    """
+    count = len(grid)
+    if not count:
+        return [], [], []
+
+    # The former BMesh operation removes all degenerate faces at radius=0.
+    if scale == 1.0 and radius == 0.0:
+        return ([[0.0, 0.0, 0.0]] if want_verts else []), [], []
+
+    if scale == 1.0:
+        sites = np.asarray([item[3:6] for item in grid], dtype=np.int64)
+        ix, iy, offsets = sites.T
+        if sides == 6:
+            key_x = 3 * ix[:, None] + np.array([1, 2, 1, -1, -2, -1])
+            key_y = (2 * iy - offsets)[:, None] + np.array([1, 0, -1, -1, 0, 1])
+        elif sides == 4:
+            key_x = 2 * ix[:, None] + np.array([1, 1, -1, -1])
+            key_y = (2 * iy - offsets)[:, None] + np.array([1, -1, -1, 1])
+        else:
+            rotation = np.fromiter((item[2] for item in grid), dtype=np.int64, count=count)
+            sign = 1 - 2 * rotation
+            key_x = (3 * ix - rotation)[:, None] + sign[:, None] * np.array([1, 1, -2])
+            key_y = (iy - offsets)[:, None] + sign[:, None] * np.array([1, -1, 0])
+
+        # A packed integer is faster than np.unique(axis=0) and cannot
+        # collide within this grid, regardless of the world-space scale.
+        row_span = int(key_y.max() - key_y.min() + 1)
+        keys = ((key_x - key_x.min()) * row_span + key_y - key_y.min()).ravel()
+        _, first, inverse = np.unique(keys, return_index=True, return_inverse=True)
+
+        order = np.argsort(first)
+        remap = np.empty(first.size, dtype=np.int64)
+        remap[order] = np.arange(first.size)
+        faces = remap[inverse].reshape(count, sides)
+        first = first[order]
+        vertex_count = first.size
+    else:
+        faces = np.arange(count * sides, dtype=np.int64).reshape(count, sides)
+        vertex_count = count * sides
+
+    verts = []
+    if want_verts:
+        centers = np.asarray([item[:2] for item in grid], dtype=float)
+        local = np.asarray(tile[0], dtype=float)[:, :2]
+        if sides == 3:
+            sign = 1 - 2 * np.fromiter((item[2] for item in grid),
+                                       dtype=np.int64, count=count)
+        else:
+            sign = np.ones(count, dtype=np.int64)
+        all_verts = np.zeros((count, sides, 3), dtype=float)
+        all_verts[:, :, :2] = centers[:, None, :] + sign[:, None, None] * local[None, :, :]
+        flat_verts = all_verts.reshape(-1, 3)
+        verts = (flat_verts[first] if scale == 1.0 else flat_verts).tolist()
+
+    edges = []
+    if want_edges:
+        directed = np.stack((faces, np.roll(faces, -1, axis=1)), axis=-1).reshape(-1, 2)
+        if scale == 1.0:
+            low = np.minimum(directed[:, 0], directed[:, 1])
+            high = np.maximum(directed[:, 0], directed[:, 1])
+            keys = low * vertex_count + high
+            _, first_edges = np.unique(keys, return_index=True)
+            directed = directed[np.sort(first_edges)]
+        edges = directed.tolist()
+
+    return verts, edges, faces.tolist() if want_polys else []
+
+
+def generate_tiles(tile_settings, requested=(True, True, True)):
+    """Return one mesh (or list of tiles) for each input center grid."""
+    radius, angle, scale, separate, grid_list, sides = tile_settings
+    want_verts, want_edges, want_polys = requested
+    local_angle = 45 if sides == 4 else 30
+    tile = circle(radius * scale, radians(local_angle - angle), sides, None, 'pydata')
+
+    vert_grid_list, edge_grid_list, poly_grid_list = [], [], []
+    for grid in grid_list:
+        if separate:
+            tile_verts, tile_edges, tile_polys = tile
+            vert_list, edge_list, poly_list = [], [], []
+            for item in grid:
+                cx, cy, rot = item[:3]
+                if want_verts:
+                    sign = -1 if sides == 3 and rot else 1
+                    vert_list.append([(sign * x + cx, sign * y + cy, 0.0)
+                                      for x, y, _ in tile_verts])
+                if want_edges:
+                    edge_list.append(tile_edges)
+                if want_polys:
+                    poly_list.append(tile_polys)
+        else:
+            vert_list, edge_list, poly_list = _joined_tiles(
+                tile, grid, radius, scale, sides, want_verts, want_edges, want_polys)
 
         vert_grid_list.append(vert_list)
         edge_grid_list.append(edge_list)
         poly_grid_list.append(poly_list)
 
     return vert_grid_list, edge_grid_list, poly_grid_list
-
 
 def tiles(vert_list, edge_list, poly_list, tile, grid):
     verts, edges, polys = tile
@@ -394,12 +478,20 @@ class SvPolygonGridNode(SverchCustomTreeNode, bpy.types.Node):
         else:  # TRIANGLE, DIAMOND HEXAGON layouts
             param_list.extend([input_radius, input_angle, input_level])
         params = match_long_repeat(param_list)
-        grid_list = [generate_grid(self.center, self.gridLayout, self.gridType, args) for args in zip(*params)]
-        self.outputs['Centers'].sv_set([[(x, y, 0.0) for x, y, _ in grid_list[0]]])
+        centers_socket, V, E, P = self.outputs[:]
+        requested = (V.is_linked, E.is_linked, P.is_linked)
+        needs_mesh = any(requested)
+        grid_list = [
+            generate_grid(self.center, self.gridLayout, self.gridType, args,
+                          include_lattice=needs_mesh)
+            for args in zip(*params)
+        ]
+        if centers_socket.is_linked:
+            centers_socket.sv_set([
+                [(x, y, 0.0) for x, y, *_ in grid] for grid in grid_list
+            ])
 
-        # generate the vectorized tiles only if any of VEP outputs are linked
-        _, V, E, P = self.outputs[:]
-        if not any(s.is_linked for s in [V, E, P]):
+        if not needs_mesh:
             return
 
         params = match_long_repeat([input_radius, input_angle, input_scale, grid_list])
@@ -408,19 +500,22 @@ class SvPolygonGridNode(SverchCustomTreeNode, bpy.types.Node):
         for r, a, s, grid in zip(*params):
             tile_settings = [r, a, s, self.separate, [grid], sides]
 
-            verts, edges, polys = generate_tiles(tile_settings)
+            verts, edges, polys = generate_tiles(tile_settings, requested)
             vert_list.extend(verts)
             edge_list.extend(edges)
             poly_list.extend(polys)
 
-        if self.separate and len(vert_list) < 2:
+        if self.separate and len(vert_list) == 1:
             vert_list = vert_list[0]
             edge_list = edge_list[0]
             poly_list = poly_list[0]
 
-        self.outputs['Vertices'].sv_set(vert_list)
-        self.outputs['Edges'].sv_set(edge_list)
-        self.outputs['Polygons'].sv_set(poly_list)
+        if V.is_linked:
+            V.sv_set(vert_list)
+        if E.is_linked:
+            E.sv_set(edge_list)
+        if P.is_linked:
+            P.sv_set(poly_list)
 
 
 def register():
